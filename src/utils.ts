@@ -12,7 +12,6 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
         thisWeek: '#692ec2',
         future: '#808080',
     },
-    pillTextColor: '#ffffff',
 };
 
 export interface RelativeDatesSettings {
@@ -25,7 +24,6 @@ export interface RelativeDatesSettings {
         thisWeek: string;
         future: string;
     };
-    pillTextColor: string;
 }
 
 export function getRelativeText(date: moment.Moment): string {
