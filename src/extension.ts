@@ -42,7 +42,7 @@ export class DateHighlightingPlugin implements PluginValue {
                     const matches = text.matchAll(DATE_REGEX);
 
                     for (const match of matches) {
-                        const matchStart = node.from + match.index!;
+                        const matchStart = node.from + match.index;
                         const matchEnd = matchStart + match[0].length;
 
                         const cursorInRange = cursorPos >= matchStart && cursorPos <= matchEnd;

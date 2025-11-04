@@ -152,7 +152,7 @@ export default class RelativeDatesPlugin extends Plugin {
             let lastIndex = 0;
 
             for (const match of matches) {
-                const matchIndex = match.index!;
+                const matchIndex = match.index;
                 const date = moment(`${match[1]} ${match[2] || ''}`, 'YYYY-MM-DD HH:mm');
 
                 if (matchIndex > lastIndex) {
