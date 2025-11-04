@@ -1,46 +1,30 @@
-import js from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
-import globals from 'globals';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import obsidianmd from 'eslint-plugin-obsidianmd';
 
 export default [
     {
-        files: ['**/*.ts', '**/*.tsx'],
-        languageOptions: {
-            parser: tsparser,
-            parserOptions: {
-                sourceType: 'module',
-            },
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-            },
-        },
+        files: ['src/**/*.ts'],
         plugins: {
             '@typescript-eslint': tseslint,
+            'obsidianmd': obsidianmd,
+        },
+        languageOptions: {
+            ecmaVersion: 2020,
+            sourceType: 'module',
+            parser: tsparser,
+            parserOptions: {
+                project: './tsconfig.json',
+            },
         },
         rules: {
-            ...js.configs.recommended.rules,
+            ...obsidianmd.configs.recommended,
             ...tseslint.configs.recommended.rules,
             'no-trailing-spaces': 'error',
             'semi': ['error', 'always'],
             'quotes': ['error', 'single'],
             'comma-dangle': ['error', 'always-multiline'],
             'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
-            '@typescript-eslint/no-unused-vars': [
-                'error',
-                {
-                    args: 'none',
-                },
-            ],
         },
-    },
-    {
-        ignores: [
-            'main.js',
-            'node_modules/**',
-            'dist/**',
-            'build/**',
-        ],
-    },
+    }
 ];

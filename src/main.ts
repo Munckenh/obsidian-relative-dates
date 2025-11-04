@@ -13,7 +13,7 @@ export default class RelativeDatesPlugin extends Plugin {
         this.addSettingTab(new RelativeDatesSettingTab(this.app, this));
         this.registerEditorExtension(this.editorExtensions);
 
-        this.registerMarkdownPostProcessor((element, _) => {
+        this.registerMarkdownPostProcessor((element) => {
             this.processElement(element);
         });
 
