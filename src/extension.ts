@@ -1,7 +1,7 @@
 import { syntaxTree } from '@codemirror/language';
 import { RangeSetBuilder } from '@codemirror/state';
 import { Decoration, DecorationSet, EditorView, PluginSpec, PluginValue, ViewPlugin, ViewUpdate, WidgetType } from '@codemirror/view';
-import moment from 'moment';
+import { moment } from 'obsidian';
 import { DATE_REGEX, getRelativeText, getDateCategory, createDateElement } from './utils';
 
 export class DateWidget extends WidgetType {

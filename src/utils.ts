@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { moment } from 'obsidian';
 
 export const DATE_REGEX = /📅\s*(\d{4}-\d{2}-\d{2})(?:\s*(\d{2}:\d{2}))?/g;
 

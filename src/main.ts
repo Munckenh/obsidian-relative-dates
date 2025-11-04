@@ -1,6 +1,5 @@
-import { Plugin } from 'obsidian';
+import { Plugin, moment } from 'obsidian';
 import { RelativeDatesSettingTab } from './settings';
-import moment from 'moment';
 import { dateHighlightingPlugin } from './extension';
 import { DATE_REGEX, DEFAULT_SETTINGS, RelativeDatesSettings, getRelativeText, getDateCategory, createDateElement } from './utils';
 import { Extension } from '@codemirror/state';
