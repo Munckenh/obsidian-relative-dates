@@ -109,24 +109,5 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     this.plugin.settings.pillColors.future = value;
                     await this.plugin.saveSettings();
                 }));
-
-        new Setting(containerEl)
-            .setName('Text')
-            .setDesc('Color of the text inside date pills')
-            .addExtraButton(button => button
-                .setIcon('rotate-ccw')
-                .setTooltip('Restore default')
-                .onClick(async () => {
-                    this.plugin.settings.pillTextColor = '#ffffff';
-                    this.display();
-                    await this.plugin.saveSettings();
-                }),
-            )
-            .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillTextColor)
-                .onChange(async (value) => {
-                    this.plugin.settings.pillTextColor = value;
-                    await this.plugin.saveSettings();
-                }));
     }
 }
