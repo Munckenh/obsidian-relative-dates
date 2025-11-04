@@ -7,7 +7,6 @@ import { Extension } from '@codemirror/state';
 export default class RelativeDatesPlugin extends Plugin {
     settings: RelativeDatesSettings;
     private editorExtensions: Extension[] = [];
-    private styleElement: HTMLStyleElement | null = null;
 
     async onload() {
         await this.loadSettings();
@@ -23,10 +22,7 @@ export default class RelativeDatesPlugin extends Plugin {
         });
     }
 
-    onunload() {
-        if (this.styleElement && this.styleElement.parentNode)
-            this.styleElement.parentNode.removeChild(this.styleElement);
-    }
+    onunload() { }
 
     async loadSettings() {
         this.setEditorExtensions();
@@ -44,24 +40,13 @@ export default class RelativeDatesPlugin extends Plugin {
     }
 
     private updateStyles() {
-        if (!this.styleElement) {
-            this.styleElement = document.createElement('style');
-            this.styleElement.id = 'relative-dates-custom-colors';
-            document.head.appendChild(this.styleElement);
-        }
-
-        const css = `
-            body {
-                --date-pill-overdue: ${this.settings.pillColors.overdue};
-                --date-pill-today: ${this.settings.pillColors.today};
-                --date-pill-tomorrow: ${this.settings.pillColors.tomorrow};
-                --date-pill-this-week: ${this.settings.pillColors.thisWeek};
-                --date-pill-future: ${this.settings.pillColors.future};
-                --date-pill-text: ${this.settings.pillTextColor};
-            }
-        `;
-
-        this.styleElement.textContent = css;
+        document.body.setCssProps({
+            '--date-pill-overdue': this.settings.pillColors.overdue,
+            '--date-pill-today': this.settings.pillColors.today,
+            '--date-pill-tomorrow': this.settings.pillColors.tomorrow,
+            '--date-pill-this-week': this.settings.pillColors.thisWeek,
+            '--date-pill-future': this.settings.pillColors.future,
+        });
     }
 
     private processElement(element: Element) {
