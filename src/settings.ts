@@ -1,4 +1,5 @@
 import RelativeDatesPlugin from './main';
+import { DEFAULT_SETTINGS } from './utils';
 import { App, PluginSettingTab, Setting } from 'obsidian';
 
 export class RelativeDatesSettingTab extends PluginSettingTab {
@@ -22,7 +23,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
-                    this.plugin.settings.pillColors.overdue = '#d1453b';
+                    this.plugin.settings.pillColors.overdue = DEFAULT_SETTINGS.pillColors.overdue;
                     await this.plugin.saveSettings();
                     this.display();
                 }),
@@ -41,7 +42,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
-                    this.plugin.settings.pillColors.today = '#058527';
+                    this.plugin.settings.pillColors.today = DEFAULT_SETTINGS.pillColors.today;
                     await this.plugin.saveSettings();
                     this.display();
                 }),
@@ -60,7 +61,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
-                    this.plugin.settings.pillColors.tomorrow = '#ad6200';
+                    this.plugin.settings.pillColors.tomorrow = DEFAULT_SETTINGS.pillColors.tomorrow;
                     await this.plugin.saveSettings();
                     this.display();
                 }),
@@ -79,7 +80,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
-                    this.plugin.settings.pillColors.thisWeek = '#692ec2';
+                    this.plugin.settings.pillColors.thisWeek = DEFAULT_SETTINGS.pillColors.thisWeek;
                     await this.plugin.saveSettings();
                     this.display();
                 }),
@@ -93,12 +94,12 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Future')
-            .setDesc('Color for dates beyond next week')
+            .setDesc('Color for dates beyond the next 7 days')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
-                    this.plugin.settings.pillColors.future = '#808080';
+                    this.plugin.settings.pillColors.future = DEFAULT_SETTINGS.pillColors.future;
                     await this.plugin.saveSettings();
                     this.display();
                 }),
