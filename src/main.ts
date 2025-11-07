@@ -1,4 +1,5 @@
 import {
+    MarkdownView,
     Plugin,
     moment,
 } from 'obsidian';
@@ -26,7 +27,7 @@ export default class RelativeDatesPlugin extends Plugin {
         });
 
         this.registerDomEvent(document, 'click', (event) => {
-            this.handleCheckboxClick(event);
+            this.processClickEvent(event);
         });
     }
 
@@ -37,13 +38,14 @@ export default class RelativeDatesPlugin extends Plugin {
         this.updateStyles();
     }
 
-    async saveSettings() {
+    async saveFormattingSettings() {
+        this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true);
         await this.saveData(this.settings);
-        this.updateStyles();
+    }
 
-        this.registerMarkdownPostProcessor((element) => {
-            this.processElement(element);
-        });
+    async saveColorSettings() {
+        this.updateStyles();
+        await this.saveData(this.settings);
     }
 
     private updateStyles() {
@@ -61,7 +63,7 @@ export default class RelativeDatesPlugin extends Plugin {
         items.forEach((item: HTMLElement) => this.processTaskItem(item));
     }
 
-    private handleCheckboxClick(event: Event) {
+    private processClickEvent(event: Event) {
         const target = event.target as HTMLInputElement;
         if (target.type !== 'checkbox') return;
 

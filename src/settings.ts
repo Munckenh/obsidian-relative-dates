@@ -22,13 +22,13 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Overdue')
-            .setDesc('For dates that have passed')
+            .setDesc('Dates that have passed.')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
                     this.plugin.settings.pillColors.overdue = DEFAULT_SETTINGS.pillColors.overdue;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
@@ -36,18 +36,18 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.pillColors.overdue)
                 .onChange(async (value) => {
                     this.plugin.settings.pillColors.overdue = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                 }));
 
         new Setting(containerEl)
             .setName('Today')
-            .setDesc('For today\'s date')
+            .setDesc('Today\'s date.')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
                     this.plugin.settings.pillColors.today = DEFAULT_SETTINGS.pillColors.today;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
@@ -55,18 +55,18 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.pillColors.today)
                 .onChange(async (value) => {
                     this.plugin.settings.pillColors.today = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                 }));
 
         new Setting(containerEl)
             .setName('Tomorrow')
-            .setDesc('For tomorrow\'s date')
+            .setDesc('Tomorrow\'s date.')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
                     this.plugin.settings.pillColors.tomorrow = DEFAULT_SETTINGS.pillColors.tomorrow;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
@@ -74,18 +74,18 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.pillColors.tomorrow)
                 .onChange(async (value) => {
                     this.plugin.settings.pillColors.tomorrow = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                 }));
 
         new Setting(containerEl)
             .setName('This week')
-            .setDesc('For dates within the next 7 days')
+            .setDesc('Dates within the next 7 days.')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
                     this.plugin.settings.pillColors.thisWeek = DEFAULT_SETTINGS.pillColors.thisWeek;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
@@ -93,18 +93,18 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.pillColors.thisWeek)
                 .onChange(async (value) => {
                     this.plugin.settings.pillColors.thisWeek = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                 }));
 
         new Setting(containerEl)
             .setName('Future')
-            .setDesc('For dates beyond the next 7 days')
+            .setDesc('Dates beyond the next 7 days.')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
                     this.plugin.settings.pillColors.future = DEFAULT_SETTINGS.pillColors.future;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
@@ -112,7 +112,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.pillColors.future)
                 .onChange(async (value) => {
                     this.plugin.settings.pillColors.future = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.saveColorSettings();
                 }));
 
         new Setting(containerEl).setName('Formatting').setHeading();
@@ -130,7 +130,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                         } else {
                             this.plugin.settings.prefix = value;
                         }
-                        this.plugin.saveSettings();
+                        this.plugin.saveFormattingSettings();
                     });
             });
 
@@ -155,7 +155,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.dateFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.dateFormat = value;
-                        this.plugin.saveSettings();
+                        this.plugin.saveFormattingSettings();
                     });
             });
 
@@ -180,7 +180,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.timeFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.timeFormat = value;
-                        this.plugin.saveSettings();
+                        this.plugin.saveFormattingSettings();
                     });
             });
     }
