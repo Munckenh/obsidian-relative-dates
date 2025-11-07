@@ -1,22 +1,22 @@
 # Relative Dates
 
-A simple plugin for Obsidian that transforms date references in your task lists into color-coded pills that show relative dates.
+A simple plugin for Obsidian that transforms date references in your task lists into color-coded elements that show relative dates.
 
 ## Features
 
-- Converts date references in the format `📅 YYYY-MM-DD` (with optional time `HH:MM`) into relative date pills
+- Converts date references in the format `@ YYYY-MM-DD` (with optional time `HH:MM`) into relative dates
 - Works in both Reading mode and Live Preview mode
-- Color-coded pills based on date proximity (overdue, today, tomorrow, this week, future)
+- Color-coded elements based on date proximity (overdue, today, tomorrow, this week, future)
 - Customizable colors via settings
 
 ## Usage
 
 Add dates in your task lists using the format:
 
-- `📅 2025-08-12` for dates
-- `📅 2025-08-12 14:30` for dates with time
+- `@ 2025-08-12` for dates
+- `@ 2025-08-12 14:30` for dates with time
 
-The plugin will automatically convert these into easy-to-read pills such as:
+The plugin will automatically convert these into easy-to-read elements such as:
 
 <img src="images/screenshot-1.png" width="50%">
 
