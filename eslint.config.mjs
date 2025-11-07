@@ -20,6 +20,7 @@ export default [
         rules: {
             ...obsidianmd.configs.recommended,
             ...tseslint.configs.recommended.rules,
+            'obsidianmd/ui/sentence-case': 'warn',
             'no-trailing-spaces': 'error',
             'semi': ['error', 'always'],
             'quotes': ['error', 'single'],
