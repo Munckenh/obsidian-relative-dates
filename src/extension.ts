@@ -1,8 +1,25 @@
 import { syntaxTree } from '@codemirror/language';
-import { RangeSetBuilder } from '@codemirror/state';
-import { Decoration, DecorationSet, EditorView, PluginSpec, PluginValue, ViewPlugin, ViewUpdate, WidgetType } from '@codemirror/view';
+import {
+    Extension,
+    RangeSetBuilder,
+} from '@codemirror/state';
+import {
+    Decoration,
+    DecorationSet,
+    EditorView,
+    PluginValue,
+    ViewPlugin,
+    ViewUpdate,
+    WidgetType,
+} from '@codemirror/view';
 import { moment } from 'obsidian';
-import { DATE_REGEX, getRelativeText, getDateCategory, createDateElement } from './utils';
+import {
+    getRelativeText,
+    getDateCategory,
+    createDateElement,
+    RelativeDatesSettings,
+    buildRegex,
+} from './utils';
 
 export class DateWidget extends WidgetType {
     constructor(
@@ -21,12 +38,12 @@ export class DateWidget extends WidgetType {
 export class DateHighlightingPlugin implements PluginValue {
     decorations: DecorationSet;
 
-    constructor(view: EditorView) {
+    constructor(view: EditorView, private readonly settings: RelativeDatesSettings) {
         this.decorations = this.buildDecorations(view);
     }
 
     update(update: ViewUpdate) {
-        if (update.docChanged || update.viewportChanged || update.selectionSet) {
+        if (update.docChanged || update.viewportChanged || update.selectionSet || update.focusChanged) {
             this.decorations = this.buildDecorations(update.view);
         }
     }
@@ -39,7 +56,7 @@ export class DateHighlightingPlugin implements PluginValue {
             enter: (node) => {
                 if (node.type.name.startsWith('list')) {
                     const text = view.state.doc.sliceString(node.from, node.to);
-                    const matches = text.matchAll(DATE_REGEX);
+                    const matches = text.matchAll(buildRegex(this.settings));
 
                     for (const match of matches) {
                         const matchStart = node.from + match.index;
@@ -47,7 +64,7 @@ export class DateHighlightingPlugin implements PluginValue {
 
                         const cursorInRange = cursorPos >= matchStart && cursorPos <= matchEnd;
                         if (!cursorInRange) {
-                            const date = moment(`${match[1]} ${match[2] || ''}`, 'YYYY-MM-DD HH:mm');
+                            const date = moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
 
                             if (date.isValid()) {
                                 const relativeText = getRelativeText(date);
@@ -71,11 +88,14 @@ export class DateHighlightingPlugin implements PluginValue {
     }
 }
 
-const pluginSpec: PluginSpec<DateHighlightingPlugin> = {
-    decorations: (value: DateHighlightingPlugin) => value.decorations,
-};
-
-export const dateHighlightingPlugin = ViewPlugin.fromClass(
-    DateHighlightingPlugin,
-    pluginSpec,
-);
+export function dateHighlightingPlugin(settings: RelativeDatesSettings): Extension {
+    const plugin = ViewPlugin.fromClass(
+        class extends DateHighlightingPlugin {
+            constructor(view: EditorView) {
+                super(view, settings);
+            };
+        },
+        { decorations: (value: DateHighlightingPlugin) => value.decorations },
+    );
+    return plugin;
+}

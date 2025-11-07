@@ -1,17 +1,25 @@
-import { Plugin, moment } from 'obsidian';
+import {
+    Plugin,
+    moment,
+} from 'obsidian';
 import { RelativeDatesSettingTab } from './settings';
 import { dateHighlightingPlugin } from './extension';
-import { DATE_REGEX, DEFAULT_SETTINGS, RelativeDatesSettings, getRelativeText, getDateCategory, createDateElement } from './utils';
-import { Extension } from '@codemirror/state';
+import {
+    DEFAULT_SETTINGS,
+    RelativeDatesSettings,
+    getRelativeText,
+    getDateCategory,
+    createDateElement,
+    buildRegex,
+} from './utils';
 
 export default class RelativeDatesPlugin extends Plugin {
     settings: RelativeDatesSettings;
-    private editorExtensions: Extension[] = [];
 
     async onload() {
         await this.loadSettings();
         this.addSettingTab(new RelativeDatesSettingTab(this.app, this));
-        this.registerEditorExtension(this.editorExtensions);
+        this.registerEditorExtension(dateHighlightingPlugin(this.settings));
 
         this.registerMarkdownPostProcessor((element) => {
             this.processElement(element);
@@ -25,7 +33,6 @@ export default class RelativeDatesPlugin extends Plugin {
     onunload() { }
 
     async loadSettings() {
-        this.setEditorExtensions();
         this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
         this.updateStyles();
     }
@@ -33,10 +40,10 @@ export default class RelativeDatesPlugin extends Plugin {
     async saveSettings() {
         await this.saveData(this.settings);
         this.updateStyles();
-    }
 
-    private setEditorExtensions() {
-        this.editorExtensions.push(dateHighlightingPlugin);
+        this.registerMarkdownPostProcessor((element) => {
+            this.processElement(element);
+        });
     }
 
     private updateStyles() {
@@ -91,7 +98,7 @@ export default class RelativeDatesPlugin extends Plugin {
     }
 
     private processTaskItem(item: HTMLElement) {
-        if ((item.textContent || '').search(DATE_REGEX) === -1) return;
+        if ((item.textContent || '').search(buildRegex(this.settings)) === -1) return;
 
         const nodes = this.getTextNodes(item);
         if (nodes.length > 0) {
@@ -121,7 +128,7 @@ export default class RelativeDatesPlugin extends Plugin {
         while (walker.nextNode()) {
             const node = walker.currentNode;
             const value = node.nodeValue || '';
-            if (value.search(DATE_REGEX) !== -1) nodes.push(node);
+            if (value.search(buildRegex(this.settings)) !== -1) nodes.push(node);
         }
         return nodes;
     }
@@ -129,8 +136,7 @@ export default class RelativeDatesPlugin extends Plugin {
     private processTextNodes(nodes: Text[], isStruckThrough: boolean) {
         nodes.forEach((node) => {
             const value = node.nodeValue || '';
-            const matches = Array.from(value.matchAll(DATE_REGEX));
-
+            const matches = Array.from(value.matchAll(buildRegex(this.settings)));
             if (matches.length === 0) return;
 
             const fragment = document.createDocumentFragment();
@@ -138,7 +144,7 @@ export default class RelativeDatesPlugin extends Plugin {
 
             for (const match of matches) {
                 const matchIndex = match.index;
-                const date = moment(`${match[1]} ${match[2] || ''}`, 'YYYY-MM-DD HH:mm');
+                const date = moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
 
                 if (matchIndex > lastIndex) {
                     fragment.appendChild(document.createTextNode(value.slice(lastIndex, matchIndex)));

@@ -1,6 +1,10 @@
 import RelativeDatesPlugin from './main';
 import { DEFAULT_SETTINGS } from './utils';
-import { App, PluginSettingTab, Setting } from 'obsidian';
+import {
+    App,
+    PluginSettingTab,
+    Setting,
+} from 'obsidian';
 
 export class RelativeDatesSettingTab extends PluginSettingTab {
     plugin: RelativeDatesPlugin;
@@ -18,7 +22,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Overdue')
-            .setDesc('Color for dates that have passed')
+            .setDesc('For dates that have passed')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
@@ -37,7 +41,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Today')
-            .setDesc('Color for today\'s date')
+            .setDesc('For today\'s date')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
@@ -56,7 +60,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Tomorrow')
-            .setDesc('Color for tomorrow\'s date')
+            .setDesc('For tomorrow\'s date')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
@@ -75,7 +79,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('This week')
-            .setDesc('Color for dates within the next 7 days')
+            .setDesc('For dates within the next 7 days')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
@@ -94,7 +98,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Future')
-            .setDesc('Color for dates beyond the next 7 days')
+            .setDesc('For dates beyond the next 7 days')
             .addExtraButton(button => button
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
@@ -110,5 +114,74 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     this.plugin.settings.pillColors.future = value;
                     await this.plugin.saveSettings();
                 }));
+
+        new Setting(containerEl).setName('Formatting').setHeading();
+
+        new Setting(containerEl)
+            .setName('Prefix')
+            .setDesc('Prefix character marking a date.')
+            .addText((text) => {
+                text
+                    .setPlaceholder(DEFAULT_SETTINGS.prefix)
+                    .setValue(this.plugin.settings.prefix !== DEFAULT_SETTINGS.prefix ? this.plugin.settings.prefix : '')
+                    .onChange(async (value) => {
+                        if (value === '') {
+                            this.plugin.settings.prefix = DEFAULT_SETTINGS.prefix;
+                        } else {
+                            this.plugin.settings.prefix = value;
+                        }
+                        this.plugin.saveSettings();
+                    });
+            });
+
+        const dateDesc = document.createDocumentFragment();
+        dateDesc.appendText('Format to parse dates. For syntax, refer to ');
+        dateDesc.createEl('a', {
+            text: 'format reference',
+            attr: {
+                href: 'https://momentjs.com/docs/#/displaying/format/',
+                target: '_blank',
+            },
+        });
+        dateDesc.appendText('.');
+        new Setting(containerEl)
+            .setName('Date format')
+            .setDesc(dateDesc)
+            .addDropdown((dropdown) => {
+                dropdown
+                    .addOption('YYYY-MM-DD', 'YYYY-MM-DD')
+                    .addOption('DD-MM-YYYY', 'DD-MM-YYYY')
+                    .addOption('MM-DD-YYYY', 'MM-DD-YYYY')
+                    .setValue(this.plugin.settings.dateFormat)
+                    .onChange(async (value) => {
+                        this.plugin.settings.dateFormat = value;
+                        this.plugin.saveSettings();
+                    });
+            });
+
+        const timeDesc = document.createDocumentFragment();
+        timeDesc.appendText('Format to parse times. For syntax, refer to ');
+        timeDesc.createEl('a', {
+            text: 'format reference',
+            attr: {
+                href: 'https://momentjs.com/docs/#/displaying/format/',
+                target: '_blank',
+            },
+        });
+        timeDesc.appendText('.');
+        new Setting(containerEl)
+            .setName('Time format')
+            .setDesc(timeDesc)
+            .addDropdown((dropdown) => {
+                dropdown
+                    .addOption('HH:mm', 'HH:mm')
+                    .addOption('hh:mm a', 'hh:mm a')
+                    .addOption('hh:mm A', 'hh:mm A')
+                    .setValue(this.plugin.settings.timeFormat)
+                    .onChange(async (value) => {
+                        this.plugin.settings.timeFormat = value;
+                        this.plugin.saveSettings();
+                    });
+            });
     }
 }

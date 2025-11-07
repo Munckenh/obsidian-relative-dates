@@ -1,8 +1,7 @@
 import { moment } from 'obsidian';
 
-export const DATE_REGEX = /📅\s*(\d{4}-\d{2}-\d{2})(?:\s*(\d{2}:\d{2}))?/g;
-
 export const DEFAULT_SETTINGS: RelativeDatesSettings = {
+    prefix: '\@',
     dateFormat: 'YYYY-MM-DD',
     timeFormat: 'HH:mm',
     pillColors: {
@@ -15,6 +14,7 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
 };
 
 export interface RelativeDatesSettings {
+    prefix: string,
     dateFormat: string;
     timeFormat: string;
     pillColors: {
@@ -24,6 +24,23 @@ export interface RelativeDatesSettings {
         thisWeek: string;
         future: string;
     };
+}
+
+export function buildRegex(settings: RelativeDatesSettings): RegExp {
+    const datePattern = settings.dateFormat
+        .replace(/YYYY/g, '\\d{4}')
+        .replace(/YY/g, '\\d{2}')
+        .replace(/MM/g, '\\d{2}')
+        .replace(/DD/g, '\\d{2}');
+
+    const timePattern = settings.timeFormat
+        .replace(/HH/g, '\\d{2}')
+        .replace(/hh/g, '\\d{2}')
+        .replace(/mm/g, '\\d{2}')
+        .replace(/a/g, '[ap]m')
+        .replace(/A/g, '[AP]M');
+
+    return new RegExp(`${settings.prefix}\\s*(${datePattern})\\s*(${timePattern})?`, 'g');
 }
 
 export function getRelativeText(date: moment.Moment): string {
