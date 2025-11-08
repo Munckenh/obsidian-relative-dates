@@ -20,100 +20,11 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl).setName('Color').setHeading();
 
-        new Setting(containerEl)
-            .setName('Overdue')
-            .setDesc('Dates that have passed.')
-            .addExtraButton(button => button
-                .setIcon('rotate-ccw')
-                .setTooltip('Restore default')
-                .onClick(async () => {
-                    this.plugin.settings.pillColors.overdue = DEFAULT_SETTINGS.pillColors.overdue;
-                    this.plugin.saveColorSettings();
-                    this.display();
-                }),
-            )
-            .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillColors.overdue)
-                .onChange(async (value) => {
-                    this.plugin.settings.pillColors.overdue = value;
-                    this.plugin.saveColorSettings();
-                }));
-
-        new Setting(containerEl)
-            .setName('Today')
-            .setDesc('Today\'s date.')
-            .addExtraButton(button => button
-                .setIcon('rotate-ccw')
-                .setTooltip('Restore default')
-                .onClick(async () => {
-                    this.plugin.settings.pillColors.today = DEFAULT_SETTINGS.pillColors.today;
-                    this.plugin.saveColorSettings();
-                    this.display();
-                }),
-            )
-            .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillColors.today)
-                .onChange(async (value) => {
-                    this.plugin.settings.pillColors.today = value;
-                    this.plugin.saveColorSettings();
-                }));
-
-        new Setting(containerEl)
-            .setName('Tomorrow')
-            .setDesc('Tomorrow\'s date.')
-            .addExtraButton(button => button
-                .setIcon('rotate-ccw')
-                .setTooltip('Restore default')
-                .onClick(async () => {
-                    this.plugin.settings.pillColors.tomorrow = DEFAULT_SETTINGS.pillColors.tomorrow;
-                    this.plugin.saveColorSettings();
-                    this.display();
-                }),
-            )
-            .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillColors.tomorrow)
-                .onChange(async (value) => {
-                    this.plugin.settings.pillColors.tomorrow = value;
-                    this.plugin.saveColorSettings();
-                }));
-
-        new Setting(containerEl)
-            .setName('This week')
-            .setDesc('Dates within the next 7 days.')
-            .addExtraButton(button => button
-                .setIcon('rotate-ccw')
-                .setTooltip('Restore default')
-                .onClick(async () => {
-                    this.plugin.settings.pillColors.thisWeek = DEFAULT_SETTINGS.pillColors.thisWeek;
-                    this.plugin.saveColorSettings();
-                    this.display();
-                }),
-            )
-            .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillColors.thisWeek)
-                .onChange(async (value) => {
-                    this.plugin.settings.pillColors.thisWeek = value;
-                    this.plugin.saveColorSettings();
-                }));
-
-        new Setting(containerEl)
-            .setName('Future')
-            .setDesc('Dates beyond the next 7 days.')
-            .addExtraButton(button => button
-                .setIcon('rotate-ccw')
-                .setTooltip('Restore default')
-                .onClick(async () => {
-                    this.plugin.settings.pillColors.future = DEFAULT_SETTINGS.pillColors.future;
-                    this.plugin.saveColorSettings();
-                    this.display();
-                }),
-            )
-            .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillColors.future)
-                .onChange(async (value) => {
-                    this.plugin.settings.pillColors.future = value;
-                    this.plugin.saveColorSettings();
-                }));
+        this.addColorSetting(containerEl, 'overdue', 'Overdue', 'Dates that have passed.');
+        this.addColorSetting(containerEl, 'today', 'Today', 'Today\'s date.');
+        this.addColorSetting(containerEl, 'tomorrow', 'Tomorrow', 'Tomorrow\'s date.');
+        this.addColorSetting(containerEl, 'thisWeek', 'This week', 'Dates within the next 7 days.');
+        this.addColorSetting(containerEl, 'future', 'Future', 'Dates beyond the next 7 days.');
 
         new Setting(containerEl).setName('Formatting').setHeading();
 
@@ -137,7 +48,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
         const dateDesc = document.createDocumentFragment();
         dateDesc.appendText('Format to parse dates. For syntax, refer to ');
         dateDesc.createEl('a', {
-            text: 'format reference',
+            text: 'format reference',   // eslint-disable-line obsidianmd/ui/sentence-case
             attr: {
                 href: 'https://momentjs.com/docs/#/displaying/format/',
                 target: '_blank',
@@ -149,9 +60,9 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .setDesc(dateDesc)
             .addDropdown((dropdown) => {
                 dropdown
-                    .addOption('YYYY-MM-DD', 'YYYY-MM-DD')
-                    .addOption('DD-MM-YYYY', 'DD-MM-YYYY')
-                    .addOption('MM-DD-YYYY', 'MM-DD-YYYY')
+                    .addOption('YYYY-MM-DD', 'YYYY-MM-DD')  // eslint-disable-line obsidianmd/ui/sentence-case
+                    .addOption('DD-MM-YYYY', 'DD-MM-YYYY')  // eslint-disable-line obsidianmd/ui/sentence-case
+                    .addOption('MM-DD-YYYY', 'MM-DD-YYYY')  // eslint-disable-line obsidianmd/ui/sentence-case
                     .setValue(this.plugin.settings.dateFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.dateFormat = value;
@@ -162,7 +73,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
         const timeDesc = document.createDocumentFragment();
         timeDesc.appendText('Format to parse times. For syntax, refer to ');
         timeDesc.createEl('a', {
-            text: 'format reference',
+            text: 'format reference',   // eslint-disable-line obsidianmd/ui/sentence-case
             attr: {
                 href: 'https://momentjs.com/docs/#/displaying/format/',
                 target: '_blank',
@@ -174,9 +85,9 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .setDesc(timeDesc)
             .addDropdown((dropdown) => {
                 dropdown
-                    .addOption('HH:mm', 'HH:mm')
-                    .addOption('hh:mm a', 'hh:mm a')
-                    .addOption('hh:mm A', 'hh:mm A')
+                    .addOption('HH:mm', 'HH:mm')        // eslint-disable-line obsidianmd/ui/sentence-case
+                    .addOption('hh:mm a', 'hh:mm a')    // eslint-disable-line obsidianmd/ui/sentence-case
+                    .addOption('hh:mm A', 'hh:mm A')    // eslint-disable-line obsidianmd/ui/sentence-case
                     .setValue(this.plugin.settings.timeFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.timeFormat = value;
@@ -192,5 +103,31 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .addButton((button) => {
                 button.buttonEl.outerHTML = '<a href=\'https://ko-fi.com/munckenh\' target=\'_blank\'><img height=\'36\' style=\'border:0px;height:36px;\' src=\'https://storage.ko-fi.com/cdn/kofi1.png?v=6\' border=\'0\' alt=\'Support me at ko-fi.com\' /></a>';
             });
+    }
+
+    private addColorSetting(
+        containerEl: HTMLElement,
+        key: keyof typeof DEFAULT_SETTINGS.pillColors,
+        name: string,
+        description: string,
+    ): void {
+        new Setting(containerEl)
+            .setName(name)
+            .setDesc(description)
+            .addExtraButton(button => button
+                .setIcon('rotate-ccw')
+                .setTooltip('Restore default')
+                .onClick(async () => {
+                    this.plugin.settings.pillColors[key] = DEFAULT_SETTINGS.pillColors[key];
+                    this.plugin.saveColorSettings();
+                    this.display();
+                }),
+            )
+            .addColorPicker(color => color
+                .setValue(this.plugin.settings.pillColors[key])
+                .onChange(async (value) => {
+                    this.plugin.settings.pillColors[key] = value;
+                    this.plugin.saveColorSettings();
+                }));
     }
 }
