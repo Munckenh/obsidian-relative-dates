@@ -26,7 +26,7 @@ body {
     white-space: nowrap;
     user-select: none;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.1s ease-out;
 }
 
 .date-pill.struck-through {
