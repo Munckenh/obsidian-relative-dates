@@ -41,14 +41,14 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                         } else {
                             this.plugin.settings.prefix = value;
                         }
-                        this.plugin.saveFormattingSettings();
+                        await this.plugin.saveFormattingSettings();
                     });
             });
 
         const dateDesc = document.createDocumentFragment();
         dateDesc.appendText('Format to parse dates. For syntax, refer to ');
         dateDesc.createEl('a', {
-            text: 'format reference',   // eslint-disable-line obsidianmd/ui/sentence-case
+            text: 'format reference',
             attr: {
                 href: 'https://momentjs.com/docs/#/displaying/format/',
                 target: '_blank',
@@ -60,20 +60,20 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .setDesc(dateDesc)
             .addDropdown((dropdown) => {
                 dropdown
-                    .addOption('YYYY-MM-DD', 'YYYY-MM-DD')  // eslint-disable-line obsidianmd/ui/sentence-case
-                    .addOption('DD-MM-YYYY', 'DD-MM-YYYY')  // eslint-disable-line obsidianmd/ui/sentence-case
-                    .addOption('MM-DD-YYYY', 'MM-DD-YYYY')  // eslint-disable-line obsidianmd/ui/sentence-case
+                    .addOption('YYYY-MM-DD', 'YYYY-MM-DD')
+                    .addOption('DD-MM-YYYY', 'DD-MM-YYYY')
+                    .addOption('MM-DD-YYYY', 'MM-DD-YYYY')
                     .setValue(this.plugin.settings.dateFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.dateFormat = value;
-                        this.plugin.saveFormattingSettings();
+                        await this.plugin.saveFormattingSettings();
                     });
             });
 
         const timeDesc = document.createDocumentFragment();
         timeDesc.appendText('Format to parse times. For syntax, refer to ');
         timeDesc.createEl('a', {
-            text: 'format reference',   // eslint-disable-line obsidianmd/ui/sentence-case
+            text: 'format reference',
             attr: {
                 href: 'https://momentjs.com/docs/#/displaying/format/',
                 target: '_blank',
@@ -85,13 +85,13 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .setDesc(timeDesc)
             .addDropdown((dropdown) => {
                 dropdown
-                    .addOption('HH:mm', 'HH:mm')        // eslint-disable-line obsidianmd/ui/sentence-case
-                    .addOption('hh:mm a', 'hh:mm a')    // eslint-disable-line obsidianmd/ui/sentence-case
-                    .addOption('hh:mm A', 'hh:mm A')    // eslint-disable-line obsidianmd/ui/sentence-case
+                    .addOption('HH:mm', 'HH:mm')
+                    .addOption('hh:mm a', 'hh:mm a')
+                    .addOption('hh:mm A', 'hh:mm A')
                     .setValue(this.plugin.settings.timeFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.timeFormat = value;
-                        this.plugin.saveFormattingSettings();
+                        await this.plugin.saveFormattingSettings();
                     });
             });
 
@@ -100,8 +100,22 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Donate')
             .setDesc('If you find this plugin useful, please consider donating to support its development.')
-            .addButton((button) => {
-                button.buttonEl.outerHTML = '<a href=\'https://ko-fi.com/munckenh\' target=\'_blank\'><img height=\'36\' style=\'border:0px;height:36px;\' src=\'https://storage.ko-fi.com/cdn/kofi1.png?v=6\' border=\'0\' alt=\'Support me at ko-fi.com\' /></a>';
+            .then((setting) => {
+                const link = setting.settingEl.createEl('a', {
+                    attr: {
+                        href: 'https://ko-fi.com/munckenh',
+                        target: '_blank',
+                    },
+                });
+                link.createEl('img', {
+                    attr: {
+                        height: '36',
+                        style: 'border:0px;height:36px;',
+                        src: 'https://storage.ko-fi.com/cdn/kofi1.png?v=6',
+                        border: '0',
+                        alt: 'Support me at ko-fi.com',
+                    },
+                });
             });
     }
 
@@ -119,7 +133,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setTooltip('Restore default')
                 .onClick(async () => {
                     this.plugin.settings.pillColors[key] = DEFAULT_SETTINGS.pillColors[key];
-                    this.plugin.saveColorSettings();
+                    await this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
@@ -127,7 +141,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.pillColors[key])
                 .onChange(async (value) => {
                     this.plugin.settings.pillColors[key] = value;
-                    this.plugin.saveColorSettings();
+                    await this.plugin.saveColorSettings();
                 }));
     }
 }

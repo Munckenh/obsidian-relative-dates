@@ -1,7 +1,7 @@
 import { moment } from 'obsidian';
 
 export const DEFAULT_SETTINGS: RelativeDatesSettings = {
-    prefix: '\@',
+    prefix: '@',
     dateFormat: 'YYYY-MM-DD',
     timeFormat: 'HH:mm',
     pillColors: {
