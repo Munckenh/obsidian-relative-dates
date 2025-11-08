@@ -183,5 +183,14 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                         this.plugin.saveFormattingSettings();
                     });
             });
+
+        new Setting(containerEl).setName('Support').setHeading();
+
+        new Setting(containerEl)
+            .setName('Donate')
+            .setDesc('If you find this plugin useful, please consider donating to support its development.')
+            .addButton((button) => {
+                button.buttonEl.outerHTML = '<a href=\'https://ko-fi.com/munckenh\' target=\'_blank\'><img height=\'36\' style=\'border:0px;height:36px;\' src=\'https://storage.ko-fi.com/cdn/kofi1.png?v=6\' border=\'0\' alt=\'Support me at ko-fi.com\' /></a>';
+            });
     }
 }
