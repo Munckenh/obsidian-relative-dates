@@ -28,7 +28,7 @@
 		"builtin-modules": "^3.3.0",
 		"esbuild": "^0.25.8",
 		"eslint": "^9.0.0",
-		"eslint-plugin-obsidianmd": "^0.1.7",
+		"eslint-plugin-obsidianmd": "^0.1.8",
 		"obsidian": "latest",
 		"tslib": "^2.4.0",
 		"typescript": "^5.9.0"
