@@ -65,7 +65,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     .addOption('YYYY-MM-DD', 'YYYY-MM-DD')
                     .addOption('DD-MM-YYYY', 'DD-MM-YYYY')
                     .addOption('MM-DD-YYYY', 'MM-DD-YYYY')
-                    /* eslint-enable */
+                    /* eslint-enable obsidianmd/ui/sentence-case */
                     .setValue(this.plugin.settings.dateFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.dateFormat = value;
@@ -93,7 +93,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     .addOption('HH:mm', 'HH:mm')
                     .addOption('hh:mm a', 'hh:mm a')
                     .addOption('hh:mm A', 'hh:mm A')
-                    /* eslint-enable */
+                    /* eslint-enable obsidianmd/ui/sentence-case */
                     .setValue(this.plugin.settings.timeFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.timeFormat = value;
