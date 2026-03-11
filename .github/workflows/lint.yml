@@ -1,4 +1,4 @@
-name: Node.js build
+name: Lint Obsidian plugin
 
 on:
     push:
