@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-relative-dates",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Relative, color-coded dates for Obsidian",
 	"main": "main.js",
 	"scripts": {
