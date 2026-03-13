@@ -1,7 +1,7 @@
-# VS Code
-.vscode 
+# VS Code settings
+.vscode
 
-# Intellij
+# IntelliJ IDEA settings
 *.iml
 .idea
 
