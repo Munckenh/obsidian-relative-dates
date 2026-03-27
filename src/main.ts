@@ -34,7 +34,8 @@ export default class RelativeDatesPlugin extends Plugin {
     onunload() { }
 
     async loadSettings() {
-        this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+        const data = await this.loadData() as Partial<RelativeDatesSettings>;
+        this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
         this.updateStyles();
     }
 
