@@ -4,6 +4,11 @@ import globals from 'globals';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
+    {
+        ignores: [
+            'main.js',
+        ],
+    },
     ...obsidianmd.configs.recommended,
     {
         files: ['**/*.ts'],
@@ -13,7 +18,7 @@ export default defineConfig([
             },
             parser: tsparser,
             parserOptions: {
-                project: './tsconfig.json',
+                projectService: true,
             },
         },
         rules: {
