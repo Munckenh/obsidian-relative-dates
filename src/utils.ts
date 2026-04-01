@@ -83,5 +83,6 @@ export function createDateElement(text: string, category: string, isStruckThroug
     const span = document.createElement('span');
     span.textContent = text;
     span.className = `date-pill ${category}${isStruckThrough ? ' struck-through' : ''}`;
+    span.style.cursor = 'pointer';
     return span;
 }
