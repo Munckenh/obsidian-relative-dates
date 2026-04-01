@@ -1,26 +1,26 @@
 body {
-    --date-pill-overdue: #d1453b;
-    --date-pill-today: #058527;
-    --date-pill-tomorrow: #ad6200;
-    --date-pill-this-week: #692ec2;
-    --date-pill-future: #808080;
+    --overdue: #d1453b;
+    --today: #058527;
+    --tomorrow: #ad6200;
+    --this-week: #692ec2;
+    --future: #808080;
 }
 
 .theme-dark {
-    --date-pill-text: #ffffff;
-    --date-pill-hover: rgba(255, 255, 255, 0.1);
+    --text-color: #ffffff;
+    --hover: rgba(255, 255, 255, 0.1);
 }
 
 .theme-light {
-    --date-pill-text: #000000;
-    --date-pill-hover: rgba(0, 0, 0, 0.1);
+    --text-color: #000000;
+    --hover: rgba(0, 0, 0, 0.1);
 }
 
 .date-pill {
     display: inline-block;
     padding: 2px 8px;
     border-radius: 9999px;
-    color: var(--date-pill-text);
+    color: var(--text-color);
     font-size: 0.8em;
     margin: 0 4px;
     white-space: nowrap;
@@ -30,27 +30,27 @@ body {
 }
 
 .date-pill.struck-through {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
-.date-pill-overdue {
-    background-color: var(--date-pill-overdue);
+.date-pill.overdue {
+    background-color: var(--overdue);
 }
 
-.date-pill-today {
-    background-color: var(--date-pill-today);
+.date-pill.today {
+    background-color: var(--today);
 }
 
-.date-pill-tomorrow {
-    background-color: var(--date-pill-tomorrow);
+.date-pill.tomorrow {
+    background-color: var(--tomorrow);
 }
 
-.date-pill-this-week {
-    background-color: var(--date-pill-this-week);
+.date-pill.this-week {
+    background-color: var(--this-week);
 }
 
-.date-pill-future {
-    background-color: var(--date-pill-future);
+.date-pill.future {
+    background-color: var(--future);
 }
 
 .date-pill:hover {

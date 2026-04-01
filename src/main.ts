@@ -51,11 +51,11 @@ export default class RelativeDatesPlugin extends Plugin {
 
     private updateStyles() {
         document.body.setCssProps({
-            '--date-pill-overdue': this.settings.pillColors.overdue,
-            '--date-pill-today': this.settings.pillColors.today,
-            '--date-pill-tomorrow': this.settings.pillColors.tomorrow,
-            '--date-pill-this-week': this.settings.pillColors.thisWeek,
-            '--date-pill-future': this.settings.pillColors.future,
+            '--overdue': this.settings.pillColors.overdue,
+            '--today': this.settings.pillColors.today,
+            '--tomorrow': this.settings.pillColors.tomorrow,
+            '--this-week': this.settings.pillColors.thisWeek,
+            '--future': this.settings.pillColors.future,
         });
     }
 
