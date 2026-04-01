@@ -79,9 +79,14 @@ export function getDateCategory(date: moment.Moment): string {
     return 'future';
 }
 
-export function createDateElement(date: moment.Moment, isStruckThrough: boolean = false): HTMLElement {
+export function createDateElement(
+    date: moment.Moment,
+    isStruckThrough: boolean = false,
+    onClick?: () => void,
+): HTMLElement {
     const span = document.createElement('span');
     span.textContent = getRelativeText(date);
     span.className = `date-pill ${getDateCategory(date)}${isStruckThrough ? ' struck-through' : ''}`;
+    if (onClick) span.addEventListener('click', onClick);
     return span;
 }

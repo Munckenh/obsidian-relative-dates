@@ -3,6 +3,11 @@ import {
     Plugin,
     moment,
 } from 'obsidian';
+import {
+    getDailyNote,
+    getAllDailyNotes,
+    createDailyNote,
+} from 'obsidian-daily-notes-interface';
 import { RelativeDatesSettingTab } from './settings';
 import { dateHighlightingPlugin } from './extension';
 import {
@@ -152,7 +157,9 @@ export default class RelativeDatesPlugin extends Plugin {
                 }
 
                 if (date.isValid()) {
-                    fragment.appendChild(createDateElement(date, isStruckThrough));
+                    fragment.appendChild(createDateElement(date, isStruckThrough, () => {
+                        void this.openDailyNote(date);
+                    }));
                 } else {
                     fragment.appendChild(document.createTextNode(match[0]));
                 }
@@ -166,5 +173,16 @@ export default class RelativeDatesPlugin extends Plugin {
 
             node.parentNode!.replaceChild(fragment, node);
         });
+    }
+
+    private async openDailyNote(date: moment.Moment) {
+        const dailyNotes = getAllDailyNotes();
+        let file = getDailyNote(date, dailyNotes);
+        if (!file) file = await createDailyNote(date);
+
+        if (file) {
+            const leaf = this.app.workspace.getLeaf();
+            await leaf.openFile(file);
+        }
     }
 }
