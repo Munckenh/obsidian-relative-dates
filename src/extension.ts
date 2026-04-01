@@ -14,8 +14,6 @@ import {
 } from '@codemirror/view';
 import { moment } from 'obsidian';
 import {
-    getRelativeText,
-    getDateCategory,
     createDateElement,
     RelativeDatesSettings,
     buildRegex,
@@ -23,15 +21,14 @@ import {
 
 export class DateWidget extends WidgetType {
     constructor(
-        private text: string,
-        private category: string,
+        private date: moment.Moment,
         private isStruckThrough: boolean = false,
     ) {
         super();
     }
 
     toDOM() {
-        return createDateElement(this.text, this.category, this.isStruckThrough);
+        return createDateElement(this.date, this.isStruckThrough);
     }
 }
 
@@ -67,13 +64,11 @@ export class DateHighlightingPlugin implements PluginValue {
                             const date = moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
 
                             if (date.isValid()) {
-                                const relativeText = getRelativeText(date);
-                                const category = getDateCategory(date);
                                 const lineText = view.state.doc.lineAt(node.from).text;
                                 const isStruckThrough = /\[[x-]\]/i.test(lineText);
 
                                 const decoration = Decoration.replace({
-                                    widget: new DateWidget(relativeText, category, isStruckThrough),
+                                    widget: new DateWidget(date, isStruckThrough),
                                 });
 
                                 builder.add(matchStart, matchEnd, decoration);

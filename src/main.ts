@@ -8,8 +8,6 @@ import { dateHighlightingPlugin } from './extension';
 import {
     DEFAULT_SETTINGS,
     RelativeDatesSettings,
-    getRelativeText,
-    getDateCategory,
     createDateElement,
     buildRegex,
 } from './utils';
@@ -154,11 +152,7 @@ export default class RelativeDatesPlugin extends Plugin {
                 }
 
                 if (date.isValid()) {
-                    fragment.appendChild(createDateElement(
-                        getRelativeText(date),
-                        getDateCategory(date),
-                        isStruckThrough,
-                    ));
+                    fragment.appendChild(createDateElement(date, isStruckThrough));
                 } else {
                     fragment.appendChild(document.createTextNode(match[0]));
                 }
