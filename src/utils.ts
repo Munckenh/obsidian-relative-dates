@@ -83,6 +83,5 @@ export function createDateElement(date: moment.Moment, isStruckThrough: boolean 
     const span = document.createElement('span');
     span.textContent = getRelativeText(date);
     span.className = `date-pill ${getDateCategory(date)}${isStruckThrough ? ' struck-through' : ''}`;
-    span.style.cursor = 'pointer';
     return span;
 }
