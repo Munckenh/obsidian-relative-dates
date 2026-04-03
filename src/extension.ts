@@ -23,19 +23,24 @@ export class DateWidget extends WidgetType {
     constructor(
         private date: moment.Moment,
         private isStruckThrough: boolean = false,
+        private onClick: () => void,
     ) {
         super();
     }
 
     toDOM() {
-        return createDateElement(this.date, this.isStruckThrough);
+        return createDateElement(this.date, this.isStruckThrough, this.onClick);
     }
 }
 
 export class DateHighlightingPlugin implements PluginValue {
     decorations: DecorationSet;
 
-    constructor(view: EditorView, private readonly settings: RelativeDatesSettings) {
+    constructor(
+        view: EditorView,
+        private readonly settings: RelativeDatesSettings,
+        private readonly openDailyNote: (date: moment.Moment) => void,
+    ) {
         this.decorations = this.buildDecorations(view);
     }
 
@@ -68,7 +73,7 @@ export class DateHighlightingPlugin implements PluginValue {
                                 const isStruckThrough = /\[[x-]\]/i.test(lineText);
 
                                 const decoration = Decoration.replace({
-                                    widget: new DateWidget(date, isStruckThrough),
+                                    widget: new DateWidget(date, isStruckThrough, () => this.openDailyNote(date)),
                                 });
 
                                 builder.add(matchStart, matchEnd, decoration);
@@ -83,11 +88,14 @@ export class DateHighlightingPlugin implements PluginValue {
     }
 }
 
-export function dateHighlightingPlugin(settings: RelativeDatesSettings): Extension {
+export function dateHighlightingPlugin(
+    settings: RelativeDatesSettings,
+    openDailyNote: (date: moment.Moment) => void,
+): Extension {
     const plugin = ViewPlugin.fromClass(
         class extends DateHighlightingPlugin {
             constructor(view: EditorView) {
-                super(view, settings);
+                super(view, settings, openDailyNote);
             };
         },
         { decorations: (value: DateHighlightingPlugin) => value.decorations },

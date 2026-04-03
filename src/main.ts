@@ -23,7 +23,7 @@ export default class RelativeDatesPlugin extends Plugin {
     async onload() {
         await this.loadSettings();
         this.addSettingTab(new RelativeDatesSettingTab(this.app, this));
-        this.registerEditorExtension(dateHighlightingPlugin(this.settings));
+        this.registerEditorExtension(dateHighlightingPlugin(this.settings, (date) => void this.openDailyNote(date)));
 
         this.registerMarkdownPostProcessor((element) => {
             this.processElement(element);
@@ -157,9 +157,7 @@ export default class RelativeDatesPlugin extends Plugin {
                 }
 
                 if (date.isValid()) {
-                    fragment.appendChild(createDateElement(date, isStruckThrough, () => {
-                        void this.openDailyNote(date);
-                    }));
+                    fragment.appendChild(createDateElement(date, isStruckThrough, () => void this.openDailyNote(date)));
                 } else {
                     fragment.appendChild(document.createTextNode(match[0]));
                 }
