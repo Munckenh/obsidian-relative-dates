@@ -18,6 +18,18 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
+        new Setting(containerEl)
+            .setName('Confirm create note')
+            .setDesc('Prompt before creating new note.')
+            .addToggle((toggle) => {
+                toggle
+                    .setValue(this.plugin.settings.requiresConfirmation)
+                    .onChange(async (value) => {
+                        this.plugin.settings.requiresConfirmation = value;
+                        await this.plugin.saveSettings();
+                    });
+            });
+
         new Setting(containerEl).setName('Color').setHeading();
 
         this.addColorSetting(containerEl, 'overdue', 'Overdue', 'Dates that have passed.');

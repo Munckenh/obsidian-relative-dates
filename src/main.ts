@@ -42,6 +42,10 @@ export default class RelativeDatesPlugin extends Plugin {
         this.updateStyles();
     }
 
+    async saveSettings() {
+        await this.saveData(this.settings);
+    }
+
     async saveFormattingSettings() {
         this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true);
         await this.saveData(this.settings);

@@ -11,6 +11,7 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
         thisWeek: '#692ec2',
         future: '#808080',
     },
+    requiresConfirmation: true,
 };
 
 export interface RelativeDatesSettings {
@@ -24,6 +25,7 @@ export interface RelativeDatesSettings {
         thisWeek: string;
         future: string;
     };
+    requiresConfirmation: boolean;
 }
 
 export function buildRegex(settings: RelativeDatesSettings): RegExp {
