@@ -38,11 +38,14 @@ The plugin will automatically convert these into easy-to-read elements such as:
 
 To release a new version of the plugin:
 
-1. Update `manifest.json` with the new version number, such as `1.0.1`, and the minimum Obsidian version required for the latest release.
-2. Run `npm version patch`, `npm version minor`, or `npm version major`.
-3. Create new GitHub release using the new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-4. Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of the repository and also in the release.
-5. Publish the release.
+1. Update the `minAppVersion` in `manifest.json` if the new release requires a higher minimum Obsidian version.
+2. Run `npm version patch`, `npm version minor`, or `npm version major`. This automatically updates the version correctly, creates a version commit, and adds the corresponding git tag.
+3. Push the commit and the new tag to GitHub:
+    ```sh
+    git push --follow-tags
+    ```
+4. A GitHub Action will automatically run, build the plugin, and create a release draft containing the required binary attachments (`manifest.json`, `main.js`, `styles.css`).
+5. Go to the GitHub repository's Releases page, review the drafted release notes, and publish the release.
 
 ## Scripts
 
