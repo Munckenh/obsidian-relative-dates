@@ -18,10 +18,7 @@ import {
 } from './utils';
 
 export default class RelativeDatesPlugin extends Plugin {
-    settings: RelativeDatesSettings = {
-        ...DEFAULT_SETTINGS,
-        pillColors: { ...DEFAULT_SETTINGS.pillColors },
-    };
+    settings: RelativeDatesSettings = Object.assign({}, DEFAULT_SETTINGS);
 
     async onload() {
         await this.loadSettings();
