@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
     "inlineSourceMap": true,
     "inlineSources": true,
     "module": "ESNext",
@@ -8,7 +7,7 @@
     "allowJs": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "isolatedModules": true,
     "strictNullChecks": true,
@@ -16,7 +15,8 @@
       "DOM",
       "ES5",
       "ES6",
-      "ES7"
+      "ES7",
+      "ES2020",
     ]
   },
   "include": [
