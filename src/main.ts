@@ -63,7 +63,7 @@ export default class RelativeDatesPlugin extends Plugin {
     }
 
     private processElement(element: Element) {
-        const items = element.querySelectorAll('.task-list-item');
+        const items = element.querySelectorAll<HTMLElement>('.task-list-item');
         items.forEach((item: HTMLElement) => this.processTaskItem(item));
     }
 
@@ -76,7 +76,7 @@ export default class RelativeDatesPlugin extends Plugin {
 
         // Allow DOM to update checkbox state first
         setTimeout(() => {
-            const items = [clickedItem, ...Array.from(clickedItem.querySelectorAll('.task-list-item'))];
+            const items = [clickedItem, ...Array.from(clickedItem.querySelectorAll<HTMLElement>('.task-list-item'))];
             items.forEach((item: HTMLElement) => {
                 item.querySelectorAll('.date-pill').forEach((pill) => {
                     pill.classList.toggle('struck-through', this.isStruckThrough(item));
