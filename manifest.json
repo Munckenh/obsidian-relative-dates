@@ -1,7 +1,7 @@
 {
 	"id": "relative-dates",
 	"name": "Relative Dates",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"minAppVersion": "1.9.0",
 	"description": "Relative, color-coded dates.",
 	"author": "Munckenh",
