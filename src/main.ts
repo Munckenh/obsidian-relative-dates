@@ -7,7 +7,9 @@ import {
     getDailyNote,
     getAllDailyNotes,
     createDailyNote,
+    getDailyNoteSettings,
 } from 'obsidian-daily-notes-interface';
+import { ConfirmationModal } from './modal';
 import { RelativeDatesSettingTab } from './settings';
 import { dateHighlightingPlugin } from './extension';
 import {
@@ -180,11 +182,38 @@ export default class RelativeDatesPlugin extends Plugin {
     private async openDailyNote(date: moment.Moment) {
         const dailyNotes = getAllDailyNotes();
         let file = getDailyNote(date, dailyNotes);
-        if (!file) file = await createDailyNote(date);
 
         if (file) {
             const leaf = this.app.workspace.getLeaf();
             await leaf.openFile(file);
+            return;
         }
+
+        const createAndOpenFile = async () => {
+            file = await createDailyNote(date);
+            if (file) {
+                const leaf = this.app.workspace.getLeaf();
+                await leaf.openFile(file);
+            }
+        };
+
+        if (!this.settings.requiresConfirmation) {
+            await createAndOpenFile();
+            return;
+        }
+
+        const filename = date.format(getDailyNoteSettings().format);
+        const textFragment = document.createDocumentFragment();
+        textFragment.appendText('The note ');
+        textFragment.createEl('b', { text: filename });
+        textFragment.appendText(' does not exist yet. Would you like to create it?');
+
+        new ConfirmationModal(
+            this.app,
+            'Create',
+            'Create new daily note?',
+            textFragment,
+            () => void createAndOpenFile(),
+        ).open();
     }
 }
