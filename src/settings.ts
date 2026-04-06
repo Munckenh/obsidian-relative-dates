@@ -60,8 +60,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
         const dateDesc = document.createDocumentFragment();
         dateDesc.appendText('Format to parse dates. For syntax, refer to ');
         dateDesc.createEl('a', {
-            // eslint-disable-next-line obsidianmd/ui/sentence-case
-            text: 'format reference',
+            text: String('format reference'),
             attr: {
                 href: 'https://momentjs.com/docs/#/displaying/format/',
                 target: '_blank',
@@ -73,11 +72,9 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .setDesc(dateDesc)
             .addDropdown((dropdown) => {
                 dropdown
-                    /* eslint-disable obsidianmd/ui/sentence-case */
-                    .addOption('YYYY-MM-DD', 'YYYY-MM-DD')
-                    .addOption('DD-MM-YYYY', 'DD-MM-YYYY')
-                    .addOption('MM-DD-YYYY', 'MM-DD-YYYY')
-                    /* eslint-enable obsidianmd/ui/sentence-case */
+                    .addOption('YYYY-MM-DD', String('YYYY-MM-DD'))
+                    .addOption('DD-MM-YYYY', String('DD-MM-YYYY'))
+                    .addOption('MM-DD-YYYY', String('MM-DD-YYYY'))
                     .setValue(this.plugin.settings.dateFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.dateFormat = value;
@@ -88,8 +85,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
         const timeDesc = document.createDocumentFragment();
         timeDesc.appendText('Format to parse times. For syntax, refer to ');
         timeDesc.createEl('a', {
-            // eslint-disable-next-line obsidianmd/ui/sentence-case
-            text: 'format reference',
+            text: String('format reference'),
             attr: {
                 href: 'https://momentjs.com/docs/#/displaying/format/',
                 target: '_blank',
@@ -101,11 +97,9 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             .setDesc(timeDesc)
             .addDropdown((dropdown) => {
                 dropdown
-                    /* eslint-disable obsidianmd/ui/sentence-case */
-                    .addOption('HH:mm', 'HH:mm')
-                    .addOption('hh:mm a', 'hh:mm a')
-                    .addOption('hh:mm A', 'hh:mm A')
-                    /* eslint-enable obsidianmd/ui/sentence-case */
+                    .addOption('HH:mm', String('HH:mm'))
+                    .addOption('hh:mm a', String('hh:mm a'))
+                    .addOption('hh:mm A', String('hh:mm A'))
                     .setValue(this.plugin.settings.timeFormat)
                     .onChange(async (value) => {
                         this.plugin.settings.timeFormat = value;
