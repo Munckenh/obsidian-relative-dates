@@ -32,7 +32,7 @@ The plugin will automatically convert these into easy-to-read elements such as:
     npm install
     npm run build
     ```
-3. Enable the plugin in Obsidian
+3. Enable the plugin in Obsidian.
 
 ## Release
 
@@ -51,5 +51,5 @@ To release a new version of the plugin:
 
 To manage the plugin, you can use the following scripts:
 
-- Build the plugin by running `npm run build` or with live reload by running `npm run dev`
-- Improve code quality (optional) by running `npm run lint`
+- Build the plugin by running `npm run build` or with live reload by running `npm run dev`.
+- Improve code quality (optional) by running `npm run lint`.
