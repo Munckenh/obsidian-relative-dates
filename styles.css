@@ -1,26 +1,26 @@
 body {
-    --overdue: #d1453b;
-    --today: #058527;
-    --tomorrow: #ad6200;
-    --this-week: #692ec2;
-    --future: #808080;
+    --relative-date-overdue: #d1453b;
+    --relative-date-today: #058527;
+    --relative-date-tomorrow: #ad6200;
+    --relative-date-this-week: #692ec2;
+    --relative-date-future: #808080;
 }
 
 .theme-dark {
-    --text-color: #ffffff;
-    --hover: rgba(255, 255, 255, 0.05);
+    --relative-date-text-color: #ffffff;
+    --relative-date-hover: rgba(255, 255, 255, 0.05);
 }
 
 .theme-light {
-    --text-color: #000000;
-    --hover: rgba(0, 0, 0, 0.05);
+    --relative-date-text-color: #000000;
+    --relative-date-hover: rgba(0, 0, 0, 0.05);
 }
 
-.date-pill {
+.relative-date {
     display: inline-block;
     padding: 2px 8px;
     border-radius: 9999px;
-    color: var(--text-color);
+    color: var(--relative-date-text-color);
     font-size: 0.8em;
     margin: 0 4px;
     white-space: nowrap;
@@ -30,38 +30,38 @@ body {
     transition: all 0.1s ease-out;
 }
 
-.date-pill.struck-through {
+.relative-date.rd-struck-through {
     background-color: transparent !important;
 }
 
-.date-pill.overdue {
-    background-color: var(--overdue);
+.relative-date.rd-overdue {
+    background-color: var(--relative-date-overdue);
 }
 
-.date-pill.today {
-    background-color: var(--today);
+.relative-date.rd-today {
+    background-color: var(--relative-date-today);
 }
 
-.date-pill.tomorrow {
-    background-color: var(--tomorrow);
+.relative-date.rd-tomorrow {
+    background-color: var(--relative-date-tomorrow);
 }
 
-.date-pill.this-week {
-    background-color: var(--this-week);
+.relative-date.rd-this-week {
+    background-color: var(--relative-date-this-week);
 }
 
-.date-pill.future {
-    background-color: var(--future);
+.relative-date.rd-future {
+    background-color: var(--relative-date-future);
 }
 
-.date-pill.struck-through:hover {
-    background-color: var(--hover) !important;
+.relative-date.rd-struck-through:hover {
+    background-color: var(--relative-date-hover) !important;
 }
 
-.date-pill:hover {
+.relative-date:hover {
     filter: brightness(1.3);
 }
 
-.date-pill:active {
+.relative-date:active {
     transform: translateY(1px);
 }

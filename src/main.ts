@@ -60,11 +60,11 @@ export default class RelativeDatesPlugin extends Plugin {
 
     private updateStyles() {
         document.body.setCssProps({
-            '--overdue': this.settings.pillColors.overdue,
-            '--today': this.settings.pillColors.today,
-            '--tomorrow': this.settings.pillColors.tomorrow,
-            '--this-week': this.settings.pillColors.thisWeek,
-            '--future': this.settings.pillColors.future,
+            '--relative-date-overdue': this.settings.pillColors.overdue,
+            '--relative-date-today': this.settings.pillColors.today,
+            '--relative-date-tomorrow': this.settings.pillColors.tomorrow,
+            '--relative-date-this-week': this.settings.pillColors.thisWeek,
+            '--relative-date-future': this.settings.pillColors.future,
         });
     }
 
@@ -84,8 +84,8 @@ export default class RelativeDatesPlugin extends Plugin {
         setTimeout(() => {
             const items = [clickedItem, ...Array.from(clickedItem.querySelectorAll<HTMLElement>('.task-list-item'))];
             items.forEach((item: HTMLElement) => {
-                item.querySelectorAll('.date-pill').forEach((pill) => {
-                    pill.classList.toggle('struck-through', this.isStruckThrough(item));
+                item.querySelectorAll('.relative-date').forEach((pill) => {
+                    pill.classList.toggle('rd-struck-through', this.isStruckThrough(item));
                 });
             });
         }, 10);

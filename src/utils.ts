@@ -70,15 +70,15 @@ export function getDateCategory(date: moment.Moment): string {
     const sevenDaysFromNow = window.moment().add(7, 'days').endOf('day');
 
     if (date.isBefore(today, 'day')) {
-        return 'overdue';
+        return 'rd-overdue';
     } else if (date.isSame(today, 'day')) {
-        return 'today';
+        return 'rd-today';
     } else if (date.isSame(tomorrow, 'day')) {
-        return 'tomorrow';
+        return 'rd-tomorrow';
     } else if (date.isBetween(tomorrow, sevenDaysFromNow, 'day')) {
-        return 'this-week';
+        return 'rd-this-week';
     }
-    return 'future';
+    return 'rd-future';
 }
 
 export function createDateElement(
@@ -88,7 +88,7 @@ export function createDateElement(
 ): HTMLElement {
     const span = document.createElement('span');
     span.textContent = getRelativeText(date);
-    span.className = `date-pill ${getDateCategory(date)}${isStruckThrough ? ' struck-through' : ''}`;
+    span.className = `relative-date ${getDateCategory(date)}${isStruckThrough ? ' rd-struck-through' : ''}`;
     if (onClick) span.addEventListener('click', onClick);
     return span;
 }
