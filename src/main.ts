@@ -1,8 +1,8 @@
 import {
     MarkdownView,
     Plugin,
+    moment,
 } from 'obsidian';
-import type { moment } from 'obsidian';
 import {
     getDailyNote,
     getAllDailyNotes,
@@ -156,7 +156,7 @@ export default class RelativeDatesPlugin extends Plugin {
 
             for (const match of matches) {
                 const matchIndex = match.index;
-                const date = window.moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
+                const date = moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
 
                 if (matchIndex > lastIndex) {
                     fragment.appendChild(document.createTextNode(value.slice(lastIndex, matchIndex)));

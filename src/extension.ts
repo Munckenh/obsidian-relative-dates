@@ -12,7 +12,7 @@ import {
     ViewUpdate,
     WidgetType,
 } from '@codemirror/view';
-import type { moment } from 'obsidian';
+import { moment } from 'obsidian';
 import {
     createDateElement,
     RelativeDatesSettings,
@@ -66,7 +66,7 @@ export class DateHighlightingPlugin implements PluginValue {
 
                         const cursorInRange = cursorPos >= matchStart && cursorPos <= matchEnd;
                         if (!cursorInRange) {
-                            const date = window.moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
+                            const date = moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
 
                             if (date.isValid()) {
                                 const lineText = view.state.doc.lineAt(node.from).text;
