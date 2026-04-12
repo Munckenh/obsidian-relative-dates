@@ -30,10 +30,6 @@ body {
     transition: all 0.1s ease-out;
 }
 
-.relative-date.rd-struck-through {
-    background-color: transparent !important;
-}
-
 .relative-date.rd-overdue {
     background-color: var(--relative-date-overdue);
 }
@@ -54,14 +50,24 @@ body {
     background-color: var(--relative-date-future);
 }
 
-.relative-date.rd-struck-through:hover {
-    background-color: var(--relative-date-hover) !important;
-}
-
 .relative-date:hover {
     filter: brightness(1.3);
 }
 
 .relative-date:active {
     transform: translateY(1px);
+}
+
+.task-list-item[data-task="x"] .relative-date,
+.task-list-item[data-task="-"] .relative-date,
+.cm-line[data-task="x"] .relative-date,
+.cm-line[data-task="-"] .relative-date {
+    background-color: transparent !important;
+}
+
+.task-list-item[data-task="x"] .relative-date:hover,
+.task-list-item[data-task="-"] .relative-date:hover,
+.cm-line[data-task="x"] .relative-date:hover,
+.cm-line[data-task="-"] .relative-date:hover {
+    background-color: var(--relative-date-hover) !important;
 }

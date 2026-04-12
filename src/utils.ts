@@ -83,12 +83,11 @@ export function getDateCategory(date: moment.Moment): string {
 
 export function createDateElement(
     date: moment.Moment,
-    isStruckThrough: boolean = false,
     onClick?: () => void,
 ): HTMLElement {
     const span = document.createElement('span');
     span.textContent = getRelativeText(date);
-    span.className = `relative-date ${getDateCategory(date)}${isStruckThrough ? ' rd-struck-through' : ''}`;
+    span.className = `relative-date ${getDateCategory(date)}`;
     if (onClick) span.addEventListener('click', onClick);
     return span;
 }

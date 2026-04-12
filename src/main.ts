@@ -30,10 +30,6 @@ export default class RelativeDatesPlugin extends Plugin {
         this.registerMarkdownPostProcessor((element) => {
             this.processElement(element);
         });
-
-        this.registerDomEvent(document, 'click', (event) => {
-            this.processClickEvent(event);
-        });
     }
 
     onunload() { }
@@ -73,48 +69,12 @@ export default class RelativeDatesPlugin extends Plugin {
         items.forEach((item: HTMLElement) => this.processTaskItem(item));
     }
 
-    private processClickEvent(event: Event) {
-        const target = event.target as HTMLInputElement;
-        if (target.type !== 'checkbox') return;
-
-        const clickedItem = target.closest('.task-list-item') as HTMLElement;
-        if (!clickedItem) return;
-
-        // Allow DOM to update checkbox state first
-        setTimeout(() => {
-            const items = [clickedItem, ...Array.from(clickedItem.querySelectorAll<HTMLElement>('.task-list-item'))];
-            items.forEach((item: HTMLElement) => {
-                item.querySelectorAll('.relative-date').forEach((pill) => {
-                    pill.classList.toggle('rd-struck-through', this.isStruckThrough(item));
-                });
-            });
-        }, 10);
-    }
-
-    private isStruckThrough(item: HTMLElement) {
-        let current = item;
-        while (current) {
-            if (current.classList.contains('task-list-item')) {
-                const taskAttribute = current.getAttribute('data-task');
-                if (taskAttribute === 'x' || taskAttribute === '-') return true;
-            }
-
-            const parent = current.parentElement?.closest('.task-list-item') as HTMLElement;
-            if (parent) {
-                current = parent;
-            } else {
-                break;
-            }
-        }
-        return false;
-    }
-
     private processTaskItem(item: HTMLElement) {
         if ((item.textContent || '').search(buildRegex(this.settings)) === -1) return;
 
         const nodes = this.getTextNodes(item);
         if (nodes.length > 0) {
-            this.processTextNodes(nodes as Text[], this.isStruckThrough(item));
+            this.processTextNodes(nodes as Text[]);
         }
     }
 
@@ -145,7 +105,7 @@ export default class RelativeDatesPlugin extends Plugin {
         return nodes;
     }
 
-    private processTextNodes(nodes: Text[], isStruckThrough: boolean) {
+    private processTextNodes(nodes: Text[]) {
         nodes.forEach((node) => {
             const value = node.nodeValue || '';
             const matches = Array.from(value.matchAll(buildRegex(this.settings)));
@@ -163,7 +123,7 @@ export default class RelativeDatesPlugin extends Plugin {
                 }
 
                 if (date.isValid()) {
-                    fragment.appendChild(createDateElement(date, isStruckThrough, () => void this.openDailyNote(date)));
+                    fragment.appendChild(createDateElement(date, () => void this.openDailyNote(date)));
                 } else {
                     fragment.appendChild(document.createTextNode(match[0]));
                 }

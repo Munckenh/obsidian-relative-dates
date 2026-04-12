@@ -22,14 +22,13 @@ import {
 export class DateWidget extends WidgetType {
     constructor(
         private date: moment.Moment,
-        private isStruckThrough: boolean = false,
         private onClick: () => void,
     ) {
         super();
     }
 
     toDOM() {
-        return createDateElement(this.date, this.isStruckThrough, this.onClick);
+        return createDateElement(this.date, this.onClick);
     }
 }
 
@@ -69,11 +68,8 @@ export class DateHighlightingPlugin implements PluginValue {
                             const date = moment(`${match[1]} ${match[2] || ''}`, `${this.settings.dateFormat} ${this.settings.timeFormat}`);
 
                             if (date.isValid()) {
-                                const lineText = view.state.doc.lineAt(node.from).text;
-                                const isStruckThrough = /\[[x-]\]/i.test(lineText);
-
                                 const decoration = Decoration.replace({
-                                    widget: new DateWidget(date, isStruckThrough, () => this.openDailyNote(date)),
+                                    widget: new DateWidget(date, () => this.openDailyNote(date)),
                                 });
 
                                 builder.add(matchStart, matchEnd, decoration);
