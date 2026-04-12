@@ -30,23 +30,23 @@ body {
     transition: all 0.1s ease-out;
 }
 
-.relative-date.rd-overdue {
+.relative-date[data-category="overdue"] {
     background-color: var(--relative-date-overdue);
 }
 
-.relative-date.rd-today {
+.relative-date[data-category="today"] {
     background-color: var(--relative-date-today);
 }
 
-.relative-date.rd-tomorrow {
+.relative-date[data-category="tomorrow"] {
     background-color: var(--relative-date-tomorrow);
 }
 
-.relative-date.rd-this-week {
+.relative-date[data-category="this-week"] {
     background-color: var(--relative-date-this-week);
 }
 
-.relative-date.rd-future {
+.relative-date[data-category="future"] {
     background-color: var(--relative-date-future);
 }
 

@@ -70,15 +70,15 @@ export function getDateCategory(date: moment.Moment): string {
     const sevenDaysFromNow = moment().add(7, 'days').endOf('day');
 
     if (date.isBefore(today, 'day')) {
-        return 'rd-overdue';
+        return 'overdue';
     } else if (date.isSame(today, 'day')) {
-        return 'rd-today';
+        return 'today';
     } else if (date.isSame(tomorrow, 'day')) {
-        return 'rd-tomorrow';
+        return 'tomorrow';
     } else if (date.isBetween(tomorrow, sevenDaysFromNow, 'day')) {
-        return 'rd-this-week';
+        return 'this-week';
     }
-    return 'rd-future';
+    return 'future';
 }
 
 export function createDateElement(
@@ -87,7 +87,8 @@ export function createDateElement(
 ): HTMLElement {
     const span = document.createElement('span');
     span.textContent = getRelativeText(date);
-    span.className = `relative-date ${getDateCategory(date)}`;
+    span.className = 'relative-date';
+    span.dataset.category = getDateCategory(date);
     if (onClick) span.addEventListener('click', onClick);
     return span;
 }
