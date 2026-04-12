@@ -67,17 +67,23 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             },
         });
         dateDesc.appendText('.');
+        dateDesc.createEl('br');
+        dateDesc.appendText('Your current syntax looks like this: ');
+        const dateSampleEl = dateDesc.createEl('b', 'u-pop');
         new Setting(containerEl)
             .setName('Date format')
             .setDesc(dateDesc)
-            .addDropdown((dropdown) => {
-                dropdown
-                    .addOption('YYYY-MM-DD', String('YYYY-MM-DD'))
-                    .addOption('DD-MM-YYYY', String('DD-MM-YYYY'))
-                    .addOption('MM-DD-YYYY', String('MM-DD-YYYY'))
-                    .setValue(this.plugin.settings.dateFormat)
+            .addMomentFormat((momentFormat) => {
+                momentFormat
+                    .setValue(this.plugin.settings.dateFormat !== DEFAULT_SETTINGS.dateFormat ? this.plugin.settings.dateFormat : '')
+                    .setSampleEl(dateSampleEl)
+                    .setDefaultFormat(DEFAULT_SETTINGS.dateFormat)
                     .onChange(async (value) => {
-                        this.plugin.settings.dateFormat = value;
+                        if (value === '') {
+                            this.plugin.settings.dateFormat = DEFAULT_SETTINGS.dateFormat;
+                        } else {
+                            this.plugin.settings.dateFormat = value;
+                        }
                         await this.plugin.saveFormattingSettings();
                     });
             });
@@ -92,17 +98,23 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
             },
         });
         timeDesc.appendText('.');
+        timeDesc.createEl('br');
+        timeDesc.appendText('Your current syntax looks like this: ');
+        const timeSampleEl = timeDesc.createEl('b', 'u-pop');
         new Setting(containerEl)
             .setName('Time format')
             .setDesc(timeDesc)
-            .addDropdown((dropdown) => {
-                dropdown
-                    .addOption('HH:mm', String('HH:mm'))
-                    .addOption('hh:mm a', String('hh:mm a'))
-                    .addOption('hh:mm A', String('hh:mm A'))
-                    .setValue(this.plugin.settings.timeFormat)
+            .addMomentFormat((momentFormat) => {
+                momentFormat
+                    .setValue(this.plugin.settings.timeFormat !== DEFAULT_SETTINGS.timeFormat ? this.plugin.settings.timeFormat : '')
+                    .setSampleEl(timeSampleEl)
+                    .setDefaultFormat(DEFAULT_SETTINGS.timeFormat)
                     .onChange(async (value) => {
-                        this.plugin.settings.timeFormat = value;
+                        if (value === '') {
+                            this.plugin.settings.timeFormat = DEFAULT_SETTINGS.timeFormat;
+                        } else {
+                            this.plugin.settings.timeFormat = value;
+                        }
                         await this.plugin.saveFormattingSettings();
                     });
             });
