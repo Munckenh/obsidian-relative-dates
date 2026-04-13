@@ -20,17 +20,21 @@ import {
 } from './utils';
 
 export default class RelativeDatesPlugin extends Plugin {
-    settings!: RelativeDatesSettings;
-    dateRegex!: RegExp;
+    public settings!: RelativeDatesSettings;
+    public dateRegex!: RegExp;
+    private currentDay!: string;
 
     async onload() {
+        this.currentDay = moment().format('YYYY-MM-DD');
+        this.registerInterval(window.setInterval(() => this.checkForNewDay(), 60 * 1000));
         await this.loadSettings();
         this.addSettingTab(new RelativeDatesSettingTab(this.app, this));
-        this.registerEditorExtension(dateHighlightingPlugin(this.settings, () => this.dateRegex, (date) => void this.openDailyNote(date)));
-
-        this.registerMarkdownPostProcessor((element) => {
-            this.processElement(element);
-        });
+        this.registerEditorExtension(dateHighlightingPlugin(
+            this.settings,
+            () => this.dateRegex,
+            (date) => void this.openDailyNote(date),
+        ));
+        this.registerMarkdownPostProcessor((element) => this.processElement(element));
     }
 
     onunload() { }
@@ -48,7 +52,7 @@ export default class RelativeDatesPlugin extends Plugin {
 
     async saveFormattingSettings() {
         this.updateRegex();
-        this.app.workspace.getActiveViewOfType(MarkdownView)?.previewMode.rerender(true);
+        this.refreshViews();
         await this.saveData(this.settings);
     }
 
@@ -68,6 +72,24 @@ export default class RelativeDatesPlugin extends Plugin {
             '--relative-date-tomorrow': this.settings.pillColors.tomorrow,
             '--relative-date-this-week': this.settings.pillColors.thisWeek,
             '--relative-date-future': this.settings.pillColors.future,
+        });
+    }
+
+    private checkForNewDay() {
+        const today = moment().format('YYYY-MM-DD');
+        if (this.currentDay !== today) {
+            this.currentDay = today;
+            this.refreshViews();
+        }
+    }
+
+    private refreshViews() {
+        this.app.workspace.updateOptions();
+        this.app.workspace.iterateAllLeaves((leaf) => {
+            if (leaf.view.getViewType() === 'markdown') {
+                const view = leaf.view as MarkdownView;
+                view.previewMode?.rerender(true);
+            }
         });
     }
 
