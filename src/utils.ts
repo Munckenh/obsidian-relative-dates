@@ -28,14 +28,14 @@ export interface RelativeDatesSettings {
     requiresConfirmation: boolean;
 }
 
-function escapeRegExp(string: string) {
+function escapeRegex(string: string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export function buildRegex(settings: RelativeDatesSettings): RegExp {
-    let datePattern = escapeRegExp(settings.dateFormat);
-    let timePattern = escapeRegExp(settings.timeFormat);
-    const prefix = escapeRegExp(settings.prefix);
+export function compileDateRegex(settings: RelativeDatesSettings): RegExp {
+    let datePattern = escapeRegex(settings.dateFormat);
+    let timePattern = escapeRegex(settings.timeFormat);
+    const prefix = escapeRegex(settings.prefix);
 
     datePattern = datePattern
         .replace(/YYYY/g, '\\d{4}')

@@ -16,7 +16,6 @@ import { moment } from 'obsidian';
 import {
     createDateElement,
     RelativeDatesSettings,
-    buildRegex,
 } from './utils';
 
 export class DateWidget extends WidgetType {
@@ -38,6 +37,7 @@ export class DateHighlightingPlugin implements PluginValue {
     constructor(
         view: EditorView,
         private readonly settings: RelativeDatesSettings,
+        private readonly getRegex: () => RegExp,
         private readonly openDailyNote: (date: moment.Moment) => void,
     ) {
         this.decorations = this.buildDecorations(view);
@@ -57,7 +57,7 @@ export class DateHighlightingPlugin implements PluginValue {
             enter: (node) => {
                 if (node.type.name.startsWith('list')) {
                     const text = view.state.doc.sliceString(node.from, node.to);
-                    const matches = text.matchAll(buildRegex(this.settings));
+                    const matches = text.matchAll(this.getRegex());
 
                     for (const match of matches) {
                         const matchStart = node.from + match.index;
@@ -86,12 +86,13 @@ export class DateHighlightingPlugin implements PluginValue {
 
 export function dateHighlightingPlugin(
     settings: RelativeDatesSettings,
+    getRegex: () => RegExp,
     openDailyNote: (date: moment.Moment) => void,
 ): Extension {
     const plugin = ViewPlugin.fromClass(
         class extends DateHighlightingPlugin {
             constructor(view: EditorView) {
-                super(view, settings, openDailyNote);
+                super(view, settings, getRegex, openDailyNote);
             };
         },
         { decorations: (value: DateHighlightingPlugin) => value.decorations },
