@@ -28,24 +28,32 @@ export interface RelativeDatesSettings {
     requiresConfirmation: boolean;
 }
 
+function escapeRegExp(string: string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export function buildRegex(settings: RelativeDatesSettings): RegExp {
-    const datePattern = settings.dateFormat
+    let datePattern = escapeRegExp(settings.dateFormat);
+    let timePattern = escapeRegExp(settings.timeFormat);
+    const prefix = escapeRegExp(settings.prefix);
+
+    datePattern = datePattern
         .replace(/YYYY/g, '\\d{4}')
         .replace(/YY/g, '\\d{2}')
         .replace(/MM/g, '\\d{2}')
         .replace(/DD/g, '\\d{2}');
 
-    const timePattern = settings.timeFormat
+    timePattern = timePattern
         .replace(/HH/g, '\\d{2}')
         .replace(/hh/g, '\\d{2}')
         .replace(/mm/g, '\\d{2}')
         .replace(/a/g, '[ap]m')
         .replace(/A/g, '[AP]M');
 
-    return new RegExp(`${settings.prefix}\\s*(${datePattern})\\s*(${timePattern})?`, 'g');
+    return new RegExp(`${prefix}\\s*(${datePattern})(?:\\s+(${timePattern}))?`, 'g');
 }
 
-export function getRelativeText(date: moment.Moment): string {
+function getRelativeText(date: moment.Moment): string {
     const today = moment().startOf('day');
     const tomorrow = moment().add(1, 'day').startOf('day');
     const hasTime = date.minutes() !== 0 || date.hours() !== 0;
@@ -64,7 +72,7 @@ export function getRelativeText(date: moment.Moment): string {
     }
 }
 
-export function getDateCategory(date: moment.Moment): string {
+function getDateCategory(date: moment.Moment): string {
     const today = moment().startOf('day');
     const tomorrow = moment().add(1, 'day').startOf('day');
     const sevenDaysFromNow = moment().add(7, 'days').endOf('day');
