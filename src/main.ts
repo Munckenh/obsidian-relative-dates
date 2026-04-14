@@ -45,6 +45,7 @@ export default class RelativeDatesPlugin extends Plugin {
         this.settings.badgeColors = Object.assign({}, DEFAULT_SETTINGS.badgeColors, data?.badgeColors);
         this.updateRegex();
         this.updateStyles();
+        await this.saveSettings();
     }
 
     async saveSettings() {
