@@ -42,6 +42,7 @@ export default class RelativeDatesPlugin extends Plugin {
     async loadSettings() {
         const data = await this.loadData() as Partial<RelativeDatesSettings>;
         this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
+        this.settings.pillColors = Object.assign({}, DEFAULT_SETTINGS.pillColors, data?.pillColors);
         this.updateRegex();
         this.updateStyles();
     }
@@ -108,28 +109,20 @@ export default class RelativeDatesPlugin extends Plugin {
     }
 
     private getTextNodes(item: HTMLElement) {
-        const walker = document.createTreeWalker(
-            item,
-            NodeFilter.SHOW_TEXT,
-            {
-                acceptNode(node) {
-                    let parent = node.parentNode;
-                    while (parent && parent !== item) {
-                        if (parent.nodeName === 'UL' || parent.nodeName === 'OL') {
-                            return NodeFilter.FILTER_REJECT;
-                        }
-                        parent = parent.parentNode;
-                    }
-                    return NodeFilter.FILTER_ACCEPT;
-                },
-            },
-        );
+        const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT, (node) => {
+            const parentElement = node.parentElement;
+            if (parentElement && parentElement !== item) {
+                const listAncestor = parentElement.closest('ul, ol');
+                if (listAncestor && item.contains(listAncestor)) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+            }
+            return NodeFilter.FILTER_ACCEPT;
+        });
 
         const nodes = [];
         while (walker.nextNode()) {
-            const node = walker.currentNode;
-            const value = node.nodeValue || '';
-            if (value.search(this.dateRegex) !== -1) nodes.push(node);
+            nodes.push(walker.currentNode);
         }
         return nodes;
     }
