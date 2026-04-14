@@ -42,7 +42,7 @@ export default class RelativeDatesPlugin extends Plugin {
     async loadSettings() {
         const data = await this.loadData() as Partial<RelativeDatesSettings>;
         this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
-        this.settings.pillColors = Object.assign({}, DEFAULT_SETTINGS.pillColors, data?.pillColors);
+        this.settings.badgeColors = Object.assign({}, DEFAULT_SETTINGS.badgeColors, data?.badgeColors);
         this.updateRegex();
         this.updateStyles();
     }
@@ -68,11 +68,11 @@ export default class RelativeDatesPlugin extends Plugin {
 
     private updateStyles() {
         document.body.setCssProps({
-            '--relative-date-overdue': this.settings.pillColors.overdue,
-            '--relative-date-today': this.settings.pillColors.today,
-            '--relative-date-tomorrow': this.settings.pillColors.tomorrow,
-            '--relative-date-this-week': this.settings.pillColors.thisWeek,
-            '--relative-date-future': this.settings.pillColors.future,
+            '--relative-date-overdue': this.settings.badgeColors.overdue,
+            '--relative-date-today': this.settings.badgeColors.today,
+            '--relative-date-tomorrow': this.settings.badgeColors.tomorrow,
+            '--relative-date-this-week': this.settings.badgeColors.thisWeek,
+            '--relative-date-future': this.settings.badgeColors.future,
         });
     }
 

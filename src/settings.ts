@@ -143,7 +143,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
     private addColorSetting(
         containerEl: HTMLElement,
-        key: keyof typeof DEFAULT_SETTINGS.pillColors,
+        key: keyof typeof DEFAULT_SETTINGS.badgeColors,
         name: string,
         description: string,
     ): void {
@@ -154,15 +154,15 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                 .setIcon('rotate-ccw')
                 .setTooltip('Restore default')
                 .onClick(async () => {
-                    this.plugin.settings.pillColors[key] = DEFAULT_SETTINGS.pillColors[key];
+                    this.plugin.settings.badgeColors[key] = DEFAULT_SETTINGS.badgeColors[key];
                     await this.plugin.saveColorSettings();
                     this.display();
                 }),
             )
             .addColorPicker(color => color
-                .setValue(this.plugin.settings.pillColors[key])
+                .setValue(this.plugin.settings.badgeColors[key])
                 .onChange(async (value) => {
-                    this.plugin.settings.pillColors[key] = value;
+                    this.plugin.settings.badgeColors[key] = value;
                     await this.plugin.saveColorSettings();
                 }));
     }
