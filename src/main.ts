@@ -1,22 +1,22 @@
 import {
     MarkdownView,
     Plugin,
-    moment,
 } from 'obsidian';
 import {
-    getDailyNote,
-    getAllDailyNotes,
     createDailyNote,
+    getAllDailyNotes,
+    getDailyNote,
     getDailyNoteSettings,
 } from 'obsidian-daily-notes-interface';
-import { ConfirmationModal } from './modal';
-import { RelativeDatesSettingTab } from './settings';
 import { dateHighlightingPlugin } from './extension';
+import { ConfirmationModal } from './modal';
+import { moment, Moment } from './moment';
+import { RelativeDatesSettingTab } from './settings';
 import {
+    compileDateRegex,
+    createDateElement,
     DEFAULT_SETTINGS,
     RelativeDatesSettings,
-    createDateElement,
-    compileDateRegex,
 } from './utils';
 
 export default class RelativeDatesPlugin extends Plugin {
@@ -162,7 +162,7 @@ export default class RelativeDatesPlugin extends Plugin {
         });
     }
 
-    private async openDailyNote(date: moment.Moment) {
+    private async openDailyNote(date: Moment) {
         const dailyNotes = getAllDailyNotes();
         let file = getDailyNote(date, dailyNotes);
 

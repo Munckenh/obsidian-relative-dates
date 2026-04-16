@@ -1,4 +1,4 @@
-import { moment } from 'obsidian';
+import { moment, Moment } from './moment';
 
 export interface RelativeDatesSettings {
     prefix: string,
@@ -53,7 +53,7 @@ export function compileDateRegex(settings: RelativeDatesSettings): RegExp {
     return new RegExp(`${prefix}\\s*(${datePattern})(?:\\s+(${timePattern}))?`, 'g');
 }
 
-function getRelativeText(date: moment.Moment): string {
+function getRelativeText(date: Moment): string {
     const today = moment().startOf('day');
     const tomorrow = moment().add(1, 'day').startOf('day');
     const hasTime = date.minutes() !== 0 || date.hours() !== 0;
@@ -78,7 +78,7 @@ function getRelativeText(date: moment.Moment): string {
     return `${date.format('D MMM YYYY')}${timeString}`;
 }
 
-function getDateCategory(date: moment.Moment): string {
+function getDateCategory(date: Moment): string {
     const today = moment().startOf('day');
     const tomorrow = moment().add(1, 'day').startOf('day');
     const sevenDaysFromNow = moment().add(7, 'days').endOf('day');
@@ -99,7 +99,7 @@ function getDateCategory(date: moment.Moment): string {
 }
 
 export function createDateElement(
-    date: moment.Moment,
+    date: Moment,
     onClick?: () => void,
 ): HTMLElement {
     const span = document.createElement('span');

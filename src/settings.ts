@@ -1,10 +1,10 @@
-import RelativeDatesPlugin from './main';
-import { DEFAULT_SETTINGS } from './utils';
 import {
     App,
     PluginSettingTab,
     Setting,
 } from 'obsidian';
+import RelativeDatesPlugin from './main';
+import { DEFAULT_SETTINGS } from './utils';
 
 export class RelativeDatesSettingTab extends PluginSettingTab {
     plugin: RelativeDatesPlugin;

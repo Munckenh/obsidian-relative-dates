@@ -12,7 +12,7 @@ import {
     ViewUpdate,
     WidgetType,
 } from '@codemirror/view';
-import { moment } from 'obsidian';
+import { moment, Moment } from './moment';
 import {
     createDateElement,
     RelativeDatesSettings,
@@ -20,7 +20,7 @@ import {
 
 export class DateWidget extends WidgetType {
     constructor(
-        private date: moment.Moment,
+        private date: Moment,
         private onClick: () => void,
     ) {
         super();
@@ -38,7 +38,7 @@ export class DateHighlightingPlugin implements PluginValue {
         view: EditorView,
         private readonly settings: RelativeDatesSettings,
         private readonly getRegex: () => RegExp,
-        private readonly openDailyNote: (date: moment.Moment) => void,
+        private readonly openDailyNote: (date: Moment) => void,
     ) {
         this.decorations = this.buildDecorations(view);
     }
@@ -87,7 +87,7 @@ export class DateHighlightingPlugin implements PluginValue {
 export function dateHighlightingPlugin(
     settings: RelativeDatesSettings,
     getRegex: () => RegExp,
-    openDailyNote: (date: moment.Moment) => void,
+    openDailyNote: (date: Moment) => void,
 ): Extension {
     const plugin = ViewPlugin.fromClass(
         class extends DateHighlightingPlugin {
