@@ -2,7 +2,7 @@
 	"id": "relative-dates",
 	"name": "Relative Dates",
 	"version": "1.3.0",
-	"minAppVersion": "1.9.0",
+	"minAppVersion": "1.2.7",
 	"description": "Relative, color-coded dates.",
 	"author": "Munckenh",
 	"authorUrl": "https://github.com/Munckenh",
