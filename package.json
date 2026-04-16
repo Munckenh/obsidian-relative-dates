@@ -23,14 +23,15 @@
 		"@codemirror/language": "^6.5.0",
 		"@codemirror/state": "6.5.0",
 		"@codemirror/view": "^6.5.0",
-		"@typescript-eslint/parser": "^8.33.0",
-		"esbuild": "^0.25.8",
-		"eslint-plugin-obsidianmd": "^0.1.8",
+		"@typescript-eslint/parser": "^8.58.0",
+		"esbuild": "^0.25.0",
 		"eslint": "^9.0.0",
-		"globals": "^14.0.0"
+		"eslint-plugin-obsidianmd": "^0.1.9",
+		"globals": "^14.0.0",
+		"typescript": "^5.0.0"
 	},
 	"dependencies": {
 		"obsidian": "latest",
-		"obsidian-daily-notes-interface": "^0.9.0"
+		"obsidian-daily-notes-interface": "0.9.4"
 	}
 }
