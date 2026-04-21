@@ -2,15 +2,9 @@ import {
     MarkdownView,
     Plugin,
 } from 'obsidian';
-import {
-    createDailyNote,
-    getAllDailyNotes,
-    getDailyNote,
-    getDailyNoteSettings,
-} from 'obsidian-daily-notes-interface';
+import { openDailyNote } from './daily-notes';
 import { dateHighlightingPlugin } from './extension';
-import { ConfirmationModal } from './modal';
-import { moment, Moment } from './moment';
+import { moment } from './moment';
 import { RelativeDatesSettingTab } from './settings';
 import {
     compileDateRegex,
@@ -32,7 +26,7 @@ export default class RelativeDatesPlugin extends Plugin {
         this.registerEditorExtension(dateHighlightingPlugin(
             this.settings,
             () => this.dateRegex,
-            (date) => void this.openDailyNote(date),
+            (date) => void openDailyNote(this.app, this.settings, date),
         ));
         this.registerMarkdownPostProcessor((element) => this.processElement(element));
     }
@@ -146,7 +140,7 @@ export default class RelativeDatesPlugin extends Plugin {
                 }
 
                 if (date.isValid()) {
-                    fragment.appendChild(createDateElement(date, () => void this.openDailyNote(date)));
+                    fragment.appendChild(createDateElement(date, () => void openDailyNote(this.app, this.settings, date)));
                 } else {
                     fragment.appendChild(document.createTextNode(match[0]));
                 }
@@ -160,43 +154,5 @@ export default class RelativeDatesPlugin extends Plugin {
 
             node.parentNode!.replaceChild(fragment, node);
         });
-    }
-
-    private async openDailyNote(date: Moment) {
-        const dailyNotes = getAllDailyNotes();
-        let file = getDailyNote(date, dailyNotes);
-
-        if (file) {
-            const leaf = this.app.workspace.getLeaf();
-            await leaf.openFile(file);
-            return;
-        }
-
-        const createAndOpenFile = async () => {
-            file = await createDailyNote(date);
-            if (file) {
-                const leaf = this.app.workspace.getLeaf();
-                await leaf.openFile(file);
-            }
-        };
-
-        if (!this.settings.requiresConfirmation) {
-            await createAndOpenFile();
-            return;
-        }
-
-        const filename = date.format(getDailyNoteSettings().format);
-        const textFragment = document.createDocumentFragment();
-        textFragment.appendText('The note ');
-        textFragment.createEl('b', { text: filename });
-        textFragment.appendText(' does not exist yet. Would you like to create it?');
-
-        new ConfirmationModal(
-            this.app,
-            'Create',
-            'Create new daily note?',
-            textFragment,
-            () => void createAndOpenFile(),
-        ).open();
     }
 }
