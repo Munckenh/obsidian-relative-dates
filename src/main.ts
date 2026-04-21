@@ -1,6 +1,6 @@
 import {
-    MarkdownView,
     Plugin,
+    type MarkdownView,
 } from 'obsidian';
 import { openDailyNote } from './daily-notes';
 import { dateHighlightingPlugin } from './extension';
@@ -10,7 +10,7 @@ import { RelativeDatesSettingTab } from './settings';
 import {
     compileDateRegex,
     DEFAULT_SETTINGS,
-    RelativeDatesSettings,
+    type RelativeDatesSettings,
 } from './utils';
 
 export default class RelativeDatesPlugin extends Plugin {

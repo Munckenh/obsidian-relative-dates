@@ -1,5 +1,5 @@
-import type RelativeDatesPlugin from './main';
 import { openDailyNote } from './daily-notes';
+import type RelativeDatesPlugin from './main';
 import { moment } from './moment';
 import { createDateElement } from './utils';
 

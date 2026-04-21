@@ -1,7 +1,7 @@
 import {
-    App,
     PluginSettingTab,
     Setting,
+    type App,
 } from 'obsidian';
 import RelativeDatesPlugin from './main';
 import { DEFAULT_SETTINGS } from './utils';

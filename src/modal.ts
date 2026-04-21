@@ -1,4 +1,4 @@
-import { App, Modal, Setting } from 'obsidian';
+import { Modal, Setting, type App } from 'obsidian';
 
 export class ConfirmationModal extends Modal {
     constructor(app: App, cta: string, title: string, text: DocumentFragment, onSubmit: () => void) {

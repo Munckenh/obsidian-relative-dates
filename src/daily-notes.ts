@@ -1,4 +1,4 @@
-import { App } from 'obsidian';
+import type { App } from 'obsidian';
 import {
     createDailyNote,
     getAllDailyNotes,
@@ -6,8 +6,8 @@ import {
     getDailyNoteSettings,
 } from 'obsidian-daily-notes-interface';
 import { ConfirmationModal } from './modal';
-import { Moment } from './moment';
-import { RelativeDatesSettings } from './utils';
+import type { Moment } from './moment';
+import type { RelativeDatesSettings } from './utils';
 
 export async function openDailyNote(app: App, settings: RelativeDatesSettings, date: Moment) {
     const dailyNotes = getAllDailyNotes();

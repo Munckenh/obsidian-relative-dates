@@ -1,21 +1,21 @@
 import { syntaxTree } from '@codemirror/language';
 import {
-    Extension,
     RangeSetBuilder,
+    type Extension,
 } from '@codemirror/state';
 import {
     Decoration,
     DecorationSet,
     EditorView,
-    PluginValue,
     ViewPlugin,
-    ViewUpdate,
     WidgetType,
+    type PluginValue,
+    type ViewUpdate,
 } from '@codemirror/view';
-import { moment, Moment } from './moment';
+import { moment, type Moment } from './moment';
 import {
     createDateElement,
-    RelativeDatesSettings,
+    type RelativeDatesSettings,
 } from './utils';
 
 export class DateWidget extends WidgetType {
