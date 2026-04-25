@@ -29,7 +29,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
-        
+
         new Setting(containerEl)
             .setName('Limit to task items')
             .setDesc('Convert date references only within task list items.')

@@ -1,39 +1,53 @@
+import type { MarkdownPostProcessor } from 'obsidian';
 import { openDailyNote } from './daily-notes';
 import type RelativeDatesPlugin from './main';
 import { moment } from './moment';
 import { createDateElement } from './utils';
 
-export function createMarkdownPostProcessor(plugin: RelativeDatesPlugin) {
-    return (element: HTMLElement) => {
-        const items = element.querySelectorAll<HTMLElement>('.task-list-item');
-        items.forEach((item: HTMLElement) => processTaskItem(plugin, item));
+export function createMarkdownPostProcessor(plugin: RelativeDatesPlugin): MarkdownPostProcessor {
+    return (root: HTMLElement) => {
+        if (plugin.settings.processTaskItemsOnly) {
+            const items = root.querySelectorAll<HTMLElement>('.task-list-item');
+            items.forEach((item) => processElement(plugin, item));
+        } else {
+            processElement(plugin, root);
+        }
     };
 }
 
-function processTaskItem(plugin: RelativeDatesPlugin, item: HTMLElement) {
-    if ((item.textContent || '').search(plugin.dateRegex) === -1) return;
+function processElement(plugin: RelativeDatesPlugin, element: HTMLElement) {
+    // Return if element doesn't contain a date reference
+    if ((element.textContent || '').search(plugin.dateRegex) === -1) return;
 
-    const nodes = getTextNodes(item);
-    if (nodes.length > 0) {
-        processTextNodes(plugin, nodes as Text[]);
-    }
+    const nodes = getTextNodes(element, plugin.settings.processTaskItemsOnly);
+    if (nodes.length === 0) return;
+
+    processTextNodes(plugin, nodes);
 }
 
-function getTextNodes(item: HTMLElement) {
-    const walker = document.createTreeWalker(item, NodeFilter.SHOW_TEXT, (node) => {
-        const parentElement = node.parentElement;
-        if (parentElement && parentElement !== item) {
-            const listAncestor = parentElement.closest('ul, ol');
-            if (listAncestor && item.contains(listAncestor)) {
+function getTextNodes(element: HTMLElement, processTaskItemsOnly: boolean): Text[] {
+    const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        (node) => {
+            if (!node.textContent || node.textContent.trim() === '') {
                 return NodeFilter.FILTER_REJECT;
             }
-        }
-        return NodeFilter.FILTER_ACCEPT;
-    });
 
-    const nodes = [];
+            if (processTaskItemsOnly) {
+                const parent = node.parentElement;
+                if (!parent) return NodeFilter.FILTER_REJECT;
+
+                const owner = parent.closest('li');
+                if (owner !== element) return NodeFilter.FILTER_REJECT;
+            }
+
+            return NodeFilter.FILTER_ACCEPT;
+        });
+
+    const nodes: Text[] = [];
     while (walker.nextNode()) {
-        nodes.push(walker.currentNode);
+        nodes.push(walker.currentNode as Text);
     }
     return nodes;
 }
