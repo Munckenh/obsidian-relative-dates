@@ -12,6 +12,7 @@ export interface RelativeDatesSettings {
         future: string;
     };
     requiresConfirmation: boolean;
+    processTaskItemsOnly: boolean;
 }
 
 export const DEFAULT_SETTINGS: RelativeDatesSettings = {
@@ -26,6 +27,7 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
         future: '#808080',
     },
     requiresConfirmation: true,
+    processTaskItemsOnly: true,
 };
 
 function escapeRegex(string: string) {
