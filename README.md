@@ -23,7 +23,7 @@ The plugin will automatically convert these into easy-to-read elements such as:
 
 ## Installation
 
-After obsidianmd/obsidian-releases#8099 is merged and included in an Obsidian release, you can install this plugin directly from the Community plugins in Obsidian.
+After [#8099](https://github.com/obsidianmd/obsidian-releases/pull/8099) is merged and included in an Obsidian release, you can install this plugin directly from the Community plugins in Obsidian.
 
 ### Install from the latest release
 
