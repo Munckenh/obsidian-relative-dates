@@ -104,7 +104,7 @@ export function createDateElement(
     date: Moment,
     onClick?: () => void,
 ): HTMLElement {
-    const span = document.createElement('span');
+    const span = activeDocument.createElement('span');
     span.textContent = getRelativeText(date);
     span.className = 'relative-date';
     span.dataset.category = getDateCategory(date);

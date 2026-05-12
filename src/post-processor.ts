@@ -26,7 +26,7 @@ function processElement(plugin: RelativeDatesPlugin, element: HTMLElement) {
 }
 
 function getTextNodes(element: HTMLElement, processTaskItemsOnly: boolean): Text[] {
-    const walker = document.createTreeWalker(
+    const walker = activeDocument.createTreeWalker(
         element,
         NodeFilter.SHOW_TEXT,
         (node) => {
@@ -58,7 +58,7 @@ function processTextNodes(plugin: RelativeDatesPlugin, nodes: Text[]) {
         const matches = Array.from(value.matchAll(plugin.dateRegex));
         if (matches.length === 0) return;
 
-        const fragment = document.createDocumentFragment();
+        const fragment = activeDocument.createDocumentFragment();
         let lastIndex = 0;
 
         for (const match of matches) {
@@ -66,20 +66,20 @@ function processTextNodes(plugin: RelativeDatesPlugin, nodes: Text[]) {
             const date = moment(`${match[1]} ${match[2] || ''}`, `${plugin.settings.dateFormat} ${plugin.settings.timeFormat}`);
 
             if (matchIndex > lastIndex) {
-                fragment.appendChild(document.createTextNode(value.slice(lastIndex, matchIndex)));
+                fragment.appendChild(activeDocument.createTextNode(value.slice(lastIndex, matchIndex)));
             }
 
             if (date.isValid()) {
                 fragment.appendChild(createDateElement(date, () => void openDailyNote(plugin.app, plugin.settings, date)));
             } else {
-                fragment.appendChild(document.createTextNode(match[0]));
+                fragment.appendChild(activeDocument.createTextNode(match[0]));
             }
 
             lastIndex = matchIndex + match[0].length;
         }
 
         if (lastIndex < value.length) {
-            fragment.appendChild(document.createTextNode(value.slice(lastIndex)));
+            fragment.appendChild(activeDocument.createTextNode(value.slice(lastIndex)));
         }
 
         node.parentNode!.replaceChild(fragment, node);

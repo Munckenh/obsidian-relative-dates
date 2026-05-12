@@ -62,7 +62,7 @@ export default class RelativeDatesPlugin extends Plugin {
     }
 
     private updateStyles() {
-        document.body.setCssProps({
+        activeDocument.body.setCssProps({
             '--relative-date-overdue': this.settings.badgeColors.overdue,
             '--relative-date-today': this.settings.badgeColors.today,
             '--relative-date-tomorrow': this.settings.badgeColors.tomorrow,

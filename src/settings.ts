@@ -69,7 +69,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     });
             });
 
-        const dateDesc = document.createDocumentFragment();
+        const dateDesc = activeDocument.createDocumentFragment();
         dateDesc.appendText('Format to parse dates. For syntax, refer to ');
         dateDesc.createEl('a', {
             text: String('format reference'),
@@ -100,7 +100,7 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     });
             });
 
-        const timeDesc = document.createDocumentFragment();
+        const timeDesc = activeDocument.createDocumentFragment();
         timeDesc.appendText('Format to parse times. For syntax, refer to ');
         timeDesc.createEl('a', {
             text: String('format reference'),

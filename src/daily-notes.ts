@@ -33,7 +33,7 @@ export async function openDailyNote(app: App, settings: RelativeDatesSettings, d
     }
 
     const filename = date.format(getDailyNoteSettings().format);
-    const textFragment = document.createDocumentFragment();
+    const textFragment = activeDocument.createDocumentFragment();
     textFragment.appendText('The note ');
     textFragment.createEl('b', { text: filename });
     textFragment.appendText(' does not exist yet. Would you like to create it?');
