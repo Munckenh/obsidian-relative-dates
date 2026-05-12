@@ -9,8 +9,6 @@ import { ConfirmationModal } from './modal';
 import type { Moment } from './moment';
 import type { RelativeDatesSettings } from './utils';
 
-declare const activeDocument: Document;
-
 export async function openDailyNote(app: App, settings: RelativeDatesSettings, date: Moment) {
     const dailyNotes = getAllDailyNotes();
     let file = getDailyNote(date, dailyNotes);

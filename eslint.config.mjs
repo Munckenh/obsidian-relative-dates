@@ -15,6 +15,8 @@ export default defineConfig([
         languageOptions: {
             globals: {
                 ...globals.browser,
+                createFragment: 'readonly',
+                activeDocument: 'readonly',
             },
             parser: tsparser,
             parserOptions: {

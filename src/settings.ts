@@ -6,8 +6,6 @@ import {
 import RelativeDatesPlugin from './main';
 import { DEFAULT_SETTINGS } from './utils';
 
-declare const activeDocument: Document;
-
 export class RelativeDatesSettingTab extends PluginSettingTab {
     plugin: RelativeDatesPlugin;
 

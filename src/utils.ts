@@ -1,7 +1,5 @@
 import { moment, type Moment } from './moment';
 
-declare const activeDocument: Document;
-
 export interface RelativeDatesSettings {
     prefix: string,
     dateFormat: string;
