@@ -60,7 +60,7 @@ function processTextNodes(plugin: RelativeDatesPlugin, nodes: Text[]) {
         const matches = Array.from(value.matchAll(plugin.dateRegex));
         if (matches.length === 0) return;
 
-        const fragment = activeDocument.createDocumentFragment();
+        const fragment = createFragment();
         let lastIndex = 0;
 
         for (const match of matches) {
