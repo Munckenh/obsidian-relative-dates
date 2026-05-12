@@ -4,6 +4,8 @@ import type RelativeDatesPlugin from './main';
 import { moment } from './moment';
 import { createDateElement } from './utils';
 
+declare const activeDocument: Document;
+
 export function createMarkdownPostProcessor(plugin: RelativeDatesPlugin): MarkdownPostProcessor {
     return (root: HTMLElement) => {
         if (plugin.settings.processTaskItemsOnly) {

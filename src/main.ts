@@ -13,6 +13,8 @@ import {
     type RelativeDatesSettings,
 } from './utils';
 
+declare const activeDocument: Document;
+
 export default class RelativeDatesPlugin extends Plugin {
     public settings!: RelativeDatesSettings;
     public dateRegex!: RegExp;
