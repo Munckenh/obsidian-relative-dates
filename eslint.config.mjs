@@ -17,6 +17,7 @@ export default defineConfig([
                 ...globals.browser,
                 createFragment: 'readonly',
                 activeDocument: 'readonly',
+                createSpan: 'readonly',
             },
             parser: tsparser,
             parserOptions: {
