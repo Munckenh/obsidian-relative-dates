@@ -8,12 +8,12 @@ body {
 
 .theme-dark {
     --relative-date-text-color: #ffffff;
-    --relative-date-hover: rgba(255, 255, 255, 0.05);
+    --relative-date-ghost-hover: rgba(255, 255, 255, 0.05);
 }
 
 .theme-light {
     --relative-date-text-color: #000000;
-    --relative-date-hover: rgba(0, 0, 0, 0.05);
+    --relative-date-ghost-hover: rgba(0, 0, 0, 0.05);
 }
 
 .relative-date {
@@ -62,12 +62,12 @@ body {
 .task-list-item[data-task="-"] .relative-date,
 .cm-line[data-task="x"] .relative-date,
 .cm-line[data-task="-"] .relative-date {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .task-list-item[data-task="x"] .relative-date:hover,
 .task-list-item[data-task="-"] .relative-date:hover,
 .cm-line[data-task="x"] .relative-date:hover,
 .cm-line[data-task="-"] .relative-date:hover {
-    background-color: var(--relative-date-hover) !important;
+    background-color: var(--relative-date-ghost-hover);
 }
