@@ -1,17 +1,17 @@
-import tsparser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import obsidianmd from 'eslint-plugin-obsidianmd';
 import globals from 'globals';
-import { defineConfig } from 'eslint/config';
 
-export default defineConfig([
+export default tseslint.config(
     {
         ignores: [
-            'main.js',
+            '**/*.js',
+            '**/*.mjs',
+            '**/*.json',
         ],
     },
     ...obsidianmd.configs.recommended,
     {
-        files: ['**/*.ts'],
         languageOptions: {
             globals: {
                 ...globals.browser,
@@ -19,9 +19,9 @@ export default defineConfig([
                 activeDocument: 'readonly',
                 createSpan: 'readonly',
             },
-            parser: tsparser,
             parserOptions: {
                 projectService: true,
+                tsconfigRootDir: import.meta.dirname,
             },
         },
         rules: {
@@ -32,19 +32,4 @@ export default defineConfig([
             'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
         },
     },
-    {
-        files: ['*.mjs'],
-        languageOptions: {
-            globals: {
-                ...globals.node,
-            },
-        },
-        rules: {
-            'no-trailing-spaces': 'error',
-            'semi': ['error', 'always'],
-            'quotes': ['error', 'single'],
-            'comma-dangle': ['error', 'always-multiline'],
-            'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
-        },
-    },
-]);
+);
