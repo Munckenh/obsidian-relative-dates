@@ -23,10 +23,6 @@ The plugin will automatically convert these into easy-to-read elements such as:
 
 ## Installation
 
-After [#8099](https://github.com/obsidianmd/obsidian-releases/pull/8099) is merged and included in an Obsidian release, you can install this plugin directly from the Community plugins in Obsidian.
-
-### Install from the latest release
-
 1. Go to the [latest release](https://github.com/Munckenh/obsidian-relative-dates/releases/latest).
 2. Download `main.js`, `manifest.json`, and `styles.css` from the release assets.
 3. Create this folder in your vault: `.obsidian/plugins/obsidian-relative-dates`
