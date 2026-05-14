@@ -1,4 +1,7 @@
-import type { App } from 'obsidian';
+import {
+    TFile,
+    type App,
+} from 'obsidian';
 import {
     createDailyNote,
     getAllDailyNotes,
@@ -11,7 +14,7 @@ import type { RelativeDatesSettings } from './utils';
 
 export async function openDailyNote(app: App, settings: RelativeDatesSettings, date: Moment) {
     const dailyNotes = getAllDailyNotes();
-    let file = getDailyNote(date, dailyNotes);
+    const file = getDailyNote(date, dailyNotes);
 
     if (file) {
         const leaf = app.workspace.getLeaf();
@@ -20,10 +23,10 @@ export async function openDailyNote(app: App, settings: RelativeDatesSettings, d
     }
 
     const createAndOpenFile = async () => {
-        file = await createDailyNote(date);
-        if (file) {
+        const newFile = await createDailyNote(date);
+        if (newFile instanceof TFile) {
             const leaf = app.workspace.getLeaf();
-            await leaf.openFile(file);
+            await leaf.openFile(newFile);
         }
     };
 
