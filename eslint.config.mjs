@@ -2,16 +2,27 @@ import tseslint from 'typescript-eslint';
 import obsidianmd from 'eslint-plugin-obsidianmd';
 import globals from 'globals';
 
+const obsidianRecommended = obsidianmd.configs.recommended.map((config) => {
+    if (config.rules?.['obsidianmd/validate-manifest'] && !config.files) {
+        return {
+            ...config,
+            files: ['**/*.ts', '**/*.tsx'],
+        };
+    }
+    return config;
+});
+
 export default tseslint.config(
     {
         ignores: [
-            '**/*.js',
-            '**/*.mjs',
-            '**/*.json',
+            'node_modules/**',
+            'main.js',
+            '*.map',
         ],
     },
-    ...obsidianmd.configs.recommended,
+    ...obsidianRecommended,
     {
+        files: ['**/*.ts'],
         languageOptions: {
             globals: {
                 ...globals.browser,
@@ -32,4 +43,12 @@ export default tseslint.config(
             'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
         },
     },
+    {
+        files: ['**/*.mjs'],
+        languageOptions: {
+            globals: {
+                ...globals.node
+            }
+        }
+    }
 );
