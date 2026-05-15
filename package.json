@@ -29,6 +29,7 @@
 		"globals": "latest",
 		"obsidian": "latest",
 		"obsidian-daily-notes-interface": "latest",
+		"tslib": "latest",
 		"typescript": "5.4.5",
 		"typescript-eslint": "latest"
 	}
