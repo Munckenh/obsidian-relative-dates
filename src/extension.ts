@@ -21,13 +21,14 @@ import {
 export class DateWidget extends WidgetType {
     constructor(
         private date: Moment,
+        private settings: RelativeDatesSettings,
         private onClick: () => void,
     ) {
         super();
     }
 
     toDOM() {
-        return createDateElement(this.date, this.onClick);
+        return createDateElement(this.date, this.settings, this.onClick);
     }
 }
 
@@ -69,7 +70,7 @@ export class DateHighlightingPlugin implements PluginValue {
 
                             if (date.isValid()) {
                                 const decoration = Decoration.replace({
-                                    widget: new DateWidget(date, () => this.openDailyNote(date)),
+                                    widget: new DateWidget(date, this.settings, () => this.openDailyNote(date)),
                                 });
 
                                 builder.add(matchStart, matchEnd, decoration);

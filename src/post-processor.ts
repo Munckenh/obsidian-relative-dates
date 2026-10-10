@@ -70,7 +70,7 @@ function processTextNodes(plugin: RelativeDatesPlugin, nodes: Text[]) {
             }
 
             if (date.isValid()) {
-                fragment.appendChild(createDateElement(date, () => void openDailyNote(plugin.app, plugin.settings, date)));
+                fragment.appendChild(createDateElement(date, plugin.settings, () => void openDailyNote(plugin.app, plugin.settings, date)));
             } else {
                 fragment.appendChild(activeDocument.createTextNode(match[0]));
             }

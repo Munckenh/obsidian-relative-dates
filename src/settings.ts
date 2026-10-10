@@ -42,6 +42,18 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                     });
             });
 
+        new Setting(containerEl)
+            .setName('Relative future dates')
+            .setDesc('Show dates beyond the next 7 days as relative text (e.g. in 10 days, in 3 weeks, in 2 months) instead of an absolute date.')
+            .addToggle((toggle) => {
+                toggle
+                    .setValue(this.plugin.settings.relativeFutureDates)
+                    .onChange(async (value) => {
+                        this.plugin.settings.relativeFutureDates = value;
+                        await this.plugin.saveFormattingSettings();
+                    });
+            });
+
         new Setting(containerEl).setName('Color').setHeading();
 
         new Setting(containerEl)

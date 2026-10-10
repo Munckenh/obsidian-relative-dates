@@ -14,6 +14,7 @@ export interface RelativeDatesSettings {
     };
     requiresConfirmation: boolean;
     processTaskItemsOnly: boolean;
+    relativeFutureDates: boolean;
 }
 
 export const DEFAULT_SETTINGS: RelativeDatesSettings = {
@@ -30,6 +31,7 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
     },
     requiresConfirmation: true,
     processTaskItemsOnly: true,
+    relativeFutureDates: false,
 };
 
 function escapeRegex(string: string) {
@@ -57,7 +59,7 @@ export function compileDateRegex(settings: RelativeDatesSettings): RegExp {
     return new RegExp(`${prefix}\\s*(${datePattern})(?:\\s+(${timePattern}))?`, 'g');
 }
 
-function getRelativeText(date: Moment): string {
+function getRelativeText(date: Moment, settings: RelativeDatesSettings): string {
     const today = moment().startOf('day');
     const tomorrow = moment().add(1, 'day').startOf('day');
     const hasTime = date.minutes() !== 0 || date.hours() !== 0;
@@ -75,6 +77,18 @@ function getRelativeText(date: Moment): string {
     }
     if (date.isBetween(today, moment().add(7, 'days').endOf('day'), 'day')) {
         return `${date.format('dddd')}${timeString}`;
+    }
+    if (settings.relativeFutureDates && date.isAfter(today, 'day')) {
+        const days = date.clone().startOf('day').diff(today, 'days');
+        let text: string;
+        if (days < 14) {
+            text = `in ${days} days`;
+        } else if (days < 60) {
+            text = `in ${Math.round(days / 7)} weeks`;
+        } else {
+            text = moment.duration(days, 'days').humanize(true);
+        }
+        return `${text}${timeString}`;
     }
     if (date.year() === today.year()) {
         return `${date.format('D MMM')}${timeString}`;
@@ -104,10 +118,11 @@ function getDateCategory(date: Moment): string {
 
 export function createDateElement(
     date: Moment,
+    settings: RelativeDatesSettings,
     onClick?: () => void,
 ): HTMLElement {
     const span = createSpan();
-    span.textContent = getRelativeText(date);
+    span.textContent = getRelativeText(date, settings);
     span.className = 'relative-date';
     span.dataset.category = getDateCategory(date);
     if (onClick) span.addEventListener('click', onClick);
