@@ -5,13 +5,11 @@ export interface RelativeDatesSettings {
     dateFormat: string;
     timeFormat: string;
     textColor: string;
-    badgeColors: {
-        overdue: string;
-        today: string;
-        tomorrow: string;
-        thisWeek: string;
-        future: string;
-    };
+    badgeColorOverdue: string;
+    badgeColorToday: string;
+    badgeColorTomorrow: string;
+    badgeColorThisWeek: string;
+    badgeColorFuture: string;
     requiresConfirmation: boolean;
     processTaskItemsOnly: boolean;
     relativeFutureDates: boolean;
@@ -22,13 +20,11 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
     dateFormat: 'YYYY-MM-DD',
     timeFormat: 'HH:mm',
     textColor: '',
-    badgeColors: {
-        overdue: '#d1453b',
-        today: '#058527',
-        tomorrow: '#ad6200',
-        thisWeek: '#692ec2',
-        future: '#808080',
-    },
+    badgeColorOverdue: '#d1453b',
+    badgeColorToday: '#058527',
+    badgeColorTomorrow: '#ad6200',
+    badgeColorThisWeek: '#692ec2',
+    badgeColorFuture: '#808080',
     requiresConfirmation: true,
     processTaskItemsOnly: true,
     relativeFutureDates: false,

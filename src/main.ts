@@ -36,7 +36,6 @@ export default class RelativeDatesPlugin extends Plugin {
     async loadSettings() {
         const data = await this.loadData() as Partial<RelativeDatesSettings>;
         this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
-        this.settings.badgeColors = Object.assign({}, DEFAULT_SETTINGS.badgeColors, data?.badgeColors);
         this.updateRegex();
         this.updateStyles();
         await this.saveSettings();
@@ -70,11 +69,11 @@ export default class RelativeDatesPlugin extends Plugin {
             activeDocument.body.style.removeProperty('--relative-date-text-color');
         }
         activeDocument.body.setCssProps({
-            '--relative-date-overdue': this.settings.badgeColors.overdue,
-            '--relative-date-today': this.settings.badgeColors.today,
-            '--relative-date-tomorrow': this.settings.badgeColors.tomorrow,
-            '--relative-date-this-week': this.settings.badgeColors.thisWeek,
-            '--relative-date-future': this.settings.badgeColors.future,
+            '--relative-date-overdue': this.settings.badgeColorOverdue,
+            '--relative-date-today': this.settings.badgeColorToday,
+            '--relative-date-tomorrow': this.settings.badgeColorTomorrow,
+            '--relative-date-this-week': this.settings.badgeColorThisWeek,
+            '--relative-date-future': this.settings.badgeColorFuture,
         });
     }
 
