@@ -44,6 +44,27 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
 
         new Setting(containerEl).setName('Color').setHeading();
 
+        new Setting(containerEl)
+            .setName('Text color')
+            .setDesc('Defaults to match Obsidian\'s color scheme')
+            .addExtraButton(button => button
+                .setIcon('rotate-ccw')
+                .setTooltip('Restore default')
+                .onClick(async () => {
+                    this.plugin.settings.textColor = '';
+                    await this.plugin.saveColorSettings();
+                    this.display();
+                }),
+            )
+            .addColorPicker(color => color
+                .setValue(this.plugin.settings.textColor
+                    || (activeDocument.body.hasClass('theme-dark') ? '#fff' : '#000'),
+                )
+                .onChange(async (value) => {
+                    this.plugin.settings.textColor = value;
+                    await this.plugin.saveColorSettings();
+                }));
+
         this.addColorSetting(containerEl, 'overdue', 'Overdue', 'Dates that have passed.');
         this.addColorSetting(containerEl, 'today', 'Today', 'Today\'s date.');
         this.addColorSetting(containerEl, 'tomorrow', 'Tomorrow', 'Tomorrow\'s date.');

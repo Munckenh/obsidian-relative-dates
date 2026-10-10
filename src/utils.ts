@@ -4,6 +4,7 @@ export interface RelativeDatesSettings {
     prefix: string,
     dateFormat: string;
     timeFormat: string;
+    textColor: string;
     badgeColors: {
         overdue: string;
         today: string;
@@ -19,6 +20,7 @@ export const DEFAULT_SETTINGS: RelativeDatesSettings = {
     prefix: '@',
     dateFormat: 'YYYY-MM-DD',
     timeFormat: 'HH:mm',
+    textColor: '',
     badgeColors: {
         overdue: '#d1453b',
         today: '#058527',
