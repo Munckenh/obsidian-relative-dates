@@ -18,6 +18,8 @@ export default tseslint.config(
             'node_modules/**',
             'main.js',
             '*.map',
+            'esbuild.config.mjs',
+            'version-bump.mjs',
         ],
     },
     ...obsidianRecommended,
