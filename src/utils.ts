@@ -38,25 +38,44 @@ function escapeRegex(string: string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const TOKEN_PATTERNS: Record<string, string> = {
+    YYYY: '\\d{4}',
+    YY: '\\d{2}',
+    MMMM: '\\p{L}+',
+    MMM: '\\p{L}+\\.?',
+    MM: '\\d{2}',
+    M: '\\d{1,2}',
+    DD: '\\d{2}',
+    D: '\\d{1,2}',
+    dddd: '\\p{L}+',
+    ddd: '\\p{L}+\\.?',
+    HH: '\\d{2}',
+    H: '\\d{1,2}',
+    hh: '\\d{2}',
+    h: '\\d{1,2}',
+    mm: '\\d{2}',
+    m: '\\d{1,2}',
+    ss: '\\d{2}',
+    s: '\\d{1,2}',
+    A: '[AP]M',
+    a: '[ap]m',
+};
+
+const FORMAT_TOKEN = /\[([^\]]*)\]|YYYY|YY|MMMM|MMM|MM|M|DD|D|dddd|ddd|HH|H|hh|h|mm|m|ss|s|A|a|[\s\S]/g;
+
+function formatToPattern(format: string): string {
+    return format.replace(FORMAT_TOKEN, (token, literal: string | undefined) => {
+        if (literal !== undefined) return escapeRegex(literal);
+        return TOKEN_PATTERNS[token] ?? escapeRegex(token);
+    });
+}
+
 export function compileDateRegex(settings: RelativeDatesSettings): RegExp {
-    let datePattern = escapeRegex(settings.dateFormat);
-    let timePattern = escapeRegex(settings.timeFormat);
     const prefix = escapeRegex(settings.prefix);
+    const datePattern = formatToPattern(settings.dateFormat);
+    const timePattern = formatToPattern(settings.timeFormat);
 
-    datePattern = datePattern
-        .replace(/YYYY/g, '\\d{4}')
-        .replace(/YY/g, '\\d{2}')
-        .replace(/MM/g, '\\d{2}')
-        .replace(/DD/g, '\\d{2}');
-
-    timePattern = timePattern
-        .replace(/HH/g, '\\d{2}')
-        .replace(/hh/g, '\\d{2}')
-        .replace(/mm/g, '\\d{2}')
-        .replace(/a/g, '[ap]m')
-        .replace(/A/g, '[AP]M');
-
-    return new RegExp(`${prefix}\\s*(${datePattern})(?:\\s+(${timePattern}))?`, 'g');
+    return new RegExp(`${prefix}\\s*(${datePattern})(?:\\s+(${timePattern}))?(?!\\d)`, 'gu');
 }
 
 function getRelativeText(date: Moment, settings: RelativeDatesSettings): string {

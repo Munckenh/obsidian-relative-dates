@@ -14,7 +14,7 @@ import {
 } from './utils';
 
 export default class RelativeDatesPlugin extends Plugin {
-    public settings!: RelativeDatesSettings;
+    public declare settings: RelativeDatesSettings;
     public dateRegex!: RegExp;
     private currentDay!: string;
 
