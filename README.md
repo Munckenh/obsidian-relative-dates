@@ -7,8 +7,8 @@ A simple plugin for Obsidian that transforms date references in your task lists 
 - Converts date references in the format `@ YYYY-MM-DD` (with optional time `HH:MM`) into relative dates
 - Supports changing the default `@` prefix through the plugin settings
 - Works in both Reading mode and Live Preview mode
-- Color-coded elements based on date proximity (overdue, today, tomorrow, this week, future)
-- Customizable colors through the plugin settings
+- Color-coded elements by urgency (overdue, today, tomorrow, this week, future) with customizable colors through the plugin settings
+- Click on any relative date to open or create a daily note for that day (uses the settings of Daily Notes core plugin)
 
 ## Usage
 
