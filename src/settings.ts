@@ -72,7 +72,9 @@ export class RelativeDatesSettingTab extends PluginSettingTab {
                                         this.plugin.settings.textColor = '';
                                         await this.plugin.saveColorSettings();
                                         this.update();
-                                    }),
+                                    })
+                                    // Temporary workaround since `setDisabled()` is currently non-functional
+                                    .extraSettingsEl.setAttr('aria-disabled', !this.plugin.settings.textColor),
                                 )
                                 .addColorPicker(color => color
                                     .setValue(this.plugin.settings.textColor || this.getThemeTextColor())
