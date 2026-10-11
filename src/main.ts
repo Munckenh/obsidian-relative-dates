@@ -1,6 +1,6 @@
 import {
+    MarkdownView,
     Plugin,
-    type MarkdownView,
 } from 'obsidian';
 import { openDailyNote } from './daily-notes';
 import { dateHighlightingPlugin } from './extension';
@@ -31,8 +31,6 @@ export default class RelativeDatesPlugin extends Plugin {
         this.registerMarkdownPostProcessor(createMarkdownPostProcessor(this));
     }
 
-    onunload() { }
-
     async loadSettings() {
         const data = await this.loadData() as Partial<RelativeDatesSettings>;
         this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
@@ -62,13 +60,13 @@ export default class RelativeDatesPlugin extends Plugin {
 
     private updateStyles() {
         if (this.settings.textColor) {
-            activeDocument.body.setCssProps({
+            document.body.setCssProps({
                 '--relative-date-text-color': this.settings.textColor,
             });
         } else {
-            activeDocument.body.style.removeProperty('--relative-date-text-color');
+            document.body.style.removeProperty('--relative-date-text-color');
         }
-        activeDocument.body.setCssProps({
+        document.body.setCssProps({
             '--relative-date-overdue': this.settings.badgeColorOverdue,
             '--relative-date-today': this.settings.badgeColorToday,
             '--relative-date-tomorrow': this.settings.badgeColorTomorrow,
@@ -88,9 +86,8 @@ export default class RelativeDatesPlugin extends Plugin {
     private refreshViews() {
         this.app.workspace.updateOptions();
         this.app.workspace.iterateAllLeaves((leaf) => {
-            if (leaf.view.getViewType() === 'markdown') {
-                const view = leaf.view as MarkdownView;
-                view.previewMode?.rerender(true);
+            if (leaf.view instanceof MarkdownView) {
+                leaf.view.previewMode?.rerender(true);
             }
         });
     }
